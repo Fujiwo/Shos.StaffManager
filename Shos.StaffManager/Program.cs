@@ -9,6 +9,8 @@
             using System.Text;
             using System.Text.RegularExpressions;
 
+            // Note: EnumerableExtensions.ForEach method commented out as it's not used in this application
+            // This would provide a ForEach extension method for IEnumerable collections
             //public static class EnumerableExtensions
             //{
             //    public static void ForEach<TElement>(this IEnumerable<TElement> @this, Action<TElement> action)
@@ -527,9 +529,11 @@
                 public Company(DepartmentList departmentList, StaffList staffList)
                     => DepartmentList = departmentList;
 
-                /// <summary>Initializes a new instance of the Company class with default sample data</summary>
+                /// <summary>Initializes a new instance of the Company class</summary>
                 public Company()
                 {
+                    // Sample data is commented out to start with empty data
+                    // Uncomment the following lines to initialize with sample departments and staff
                     //DepartmentList = [new Department(Code: 181, Name: "クラウド開発室"),
                     //                  new Department(Code: 121, Name: "住宅商品開発室"),
                     //                  new Department(Code: 171, Name: "BIM商品開発室"),
@@ -828,8 +832,8 @@
                     return result.isAvailable ? result.item : null;
                 }
 
-                /// <summary>Gets a valid staff name from user input</summary>
-                /// <returns>The staff name or null if cancelled</returns>
+                /// <summary>Gets a valid staff ruby (phonetic reading) from user input</summary>
+                /// <returns>The staff ruby or null if cancelled</returns>
                 static string? GetRuby()
                 {
                     var result = UserInterface.Get<string>(
