@@ -20,9 +20,7 @@
             //    }
             //}
 
-            /// <summary>
-            /// Extension methods for string operations
-            /// </summary>
+            /// <summary>Extension methods for string operations</summary>
             public static class StringExtensions
             {
                 /// <summary>Calculates the display width of a string considering full-width Japanese characters</summary>
