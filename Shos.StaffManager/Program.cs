@@ -529,26 +529,7 @@
 
                 /// <summary>Initializes a new instance of the Company class</summary>
                 public Company()
-                {
-                    // Sample data is commented out to start with empty data
-                    // Uncomment the following lines to initialize with sample departments and staff
-                    //DepartmentList = [new Department(Code: 181, Name: "クラウド開発室"),
-                    //                  new Department(Code: 121, Name: "住宅商品開発室"),
-                    //                  new Department(Code: 171, Name: "BIM商品開発室"),
-                    //                  new Department(Code: 326, Name: "土木商品開発室"),
-                    //                  new Department(Code: 318, Name: "DX商品開発室" ),
-                    //                  new Department(Code: 942, Name: "人事部"      )];
-
-                    //StaffList = [new Staff(Number:  826, Name: "青木 孝行", Ruby: "アオキ タカユキ"  , Department: DepartmentList[0]),
-                    //             new Staff(Number: 1641, Name: "青柳 克彦", Ruby: "アオヤギ カツヒコ", Department: DepartmentList[1]),
-                    //             new Staff(Number:  277, Name: "伊井 教晶", Ruby: "イイ ノリアキ"    , Department: DepartmentList[2]),
-                    //             new Staff(Number: 1437, Name: "飯島 康平", Ruby: "イイジマ コウヘイ", Department: DepartmentList[2]),
-                    //             new Staff(Number: 1686, Name: "植田 大智", Ruby: "ウエダ ダイチ"    , Department: DepartmentList[4]),
-                    //             new Staff(Number: 1642, Name: "石井 博文", Ruby: "イシイ ヒロフミ"  , Department: DepartmentList[2]),
-                    //             new Staff(Number: 1567, Name: "石本 拓也", Ruby: "イシモト タクヤ"  , Department: DepartmentList[1]),
-                    //             new Staff(Number: 1609, Name: "三谷 友里恵", Ruby: "ミタニ ユリエ"  , Department: DepartmentList[5]),
-                    //             new Staff(Number: 1558, Name: "伴 亜裕美", Ruby: "バン アユミ"  , Department: DepartmentList[5])];
-                }
+                {}
 
                 /// <summary>Saves the company data to a JSON file</summary>
                 /// <param name="filePath">The path to save the file</param>
