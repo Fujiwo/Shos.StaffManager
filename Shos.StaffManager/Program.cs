@@ -9,6 +9,8 @@
             using System.Text;
             using System.Text.RegularExpressions;
 
+            // Note: EnumerableExtensions.ForEach method commented out as it's not used in this application
+            // This would provide a ForEach extension method for IEnumerable collections
             //public static class EnumerableExtensions
             //{
             //    public static void ForEach<TElement>(this IEnumerable<TElement> @this, Action<TElement> action)
@@ -18,9 +20,7 @@
             //    }
             //}
 
-            /// <summary>
-            /// Extension methods for string operations
-            /// </summary>
+            /// <summary>Extension methods for string operations</summary>
             public static class StringExtensions
             {
                 /// <summary>Calculates the display width of a string considering full-width Japanese characters</summary>
@@ -37,7 +37,9 @@
                 /// <summary>Determines if a string contains full-width (Zenkaku) characters</summary>
                 /// <param name="this">The string to check</param>
                 /// <returns>True if the string contains full-width characters</returns>
-                public static bool IsZenkaku(this string @this) => Regex.IsMatch(@this, "[^\x01-\x7Eｦ-ﾟ]");
+                public static bool IsZenkaku(this string @this) => 
+                    // Regex pattern matches any character NOT in the range of ASCII (x01-x7E) or half-width katakana (ｦ-ﾟ)
+                    Regex.IsMatch(@this, "[^\x01-\x7Eｦ-ﾟ]");
             }
 
             /// <summary>Generic type parser utility for converting strings to various types</summary>
@@ -70,17 +72,22 @@
                     ArgumentNullException.ThrowIfNull(@this);
                     ArgumentNullException.ThrowIfNull(text);
 
+                    // Get the underlying type if this is a nullable type
                     var targetType = Nullable.GetUnderlyingType(@this) ?? @this;
 
+                    // Return null for empty strings on nullable types
                     if (string.IsNullOrEmpty(text) && @this != targetType)
                         return null;
 
+                    // Try to find a static Parse method that takes a string parameter
                     var parseMethod = targetType.GetMethod("Parse", BindingFlags.Public | BindingFlags.Static,
                                                            null, [typeof(string)], null);
 
+                    // Use the Parse method if available
                     if (parseMethod is not null)
                         return parseMethod.Invoke(null, [text]);
 
+                    // Fall back to Convert.ChangeType as a last resort
                     return Convert.ChangeType(text, targetType, CultureInfo.InvariantCulture);
                 }
 
@@ -102,7 +109,9 @@
             /// <summary>Utility class for temporarily changing console colors with automatic restoration</summary>
             class ConsoleColorSetter : IDisposable
             {
+                /// <summary>Stores the original foreground color to restore later</summary>
                 ConsoleColor oldForeground = Console.ForegroundColor;
+                /// <summary>Stores the original background color to restore later</summary>
                 ConsoleColor oldBackground = Console.BackgroundColor;
 
 #pragma warning disable CA1822
@@ -118,11 +127,12 @@
                     => (Console.ForegroundColor, Console.BackgroundColor) = (oldForeground, oldBackground);
             }
 
-            /// <summaryProvides user interface utilities for console input/output operations</summary>
+            /// <summary>Provides user interface utilities for console input/output operations</summary>
             static class UserInterface
             {
                 /// <summary>The string used to cancel input operations</summary>
                 public static string CancelString { get; set; } = "/";
+                /// <summary>The header text displayed before error messages</summary>
                 public static string ErrorHeader  { get; set; } = "[エラー]";
 
                 /// <summary>Gets user input with validation rules</summary>
@@ -212,7 +222,7 @@
                 /// <summary>Gets or sets the title of the window</summary>
                 public required string Title { protected get; set; }
 
-                /// <summary> Displays the title bar with separators</summary>
+                /// <summary>Displays the title bar with separators</summary>
                 /// <param name="separatorLength">The length of the separator lines</param>
                 protected void ShowTitleBar(int separatorLength)
                 {
@@ -232,12 +242,13 @@
             /// <summary>A confirmation dialog box that prompts the user for yes/no input</summary>
             class ConfirmBox : Window
             {
-                /// <summary>Shows the confirmation dialog</summary>
-                /// <param name="text">The text to display</param>
-                /// <param name="message">The confirmation message</param>
-                /// <returns>True if user confirms, false otherwise</returns>
+                /// <summary>Shows the confirmation dialog and waits for user response</summary>
+                /// <param name="text">The main text content to display in the dialog</param>
+                /// <param name="message">The confirmation question to ask the user</param>
+                /// <returns>True if user confirms (presses 'y'), false if user declines or cancels</returns>
                 public bool Show(string text, string message)
                 {
+                    // Calculate dialog width based on content plus margin for better display
                     const int marginWidth = 8;
                     var width = text.Split('\n')
                                     .Concat(new string[] { Title, message })
@@ -249,6 +260,7 @@
                     UserInterface.Show($"{text}");
                     ShowSeparator(separatorLength: width);
 
+                    // Define characters for yes/no confirmation
                     const char yesCharacter = 'y';
                     const char noCharacter  = 'n';
                     var result = UserInterface.GetMnemonic($"{message} ({yesCharacter}/{noCharacter})", $"{yesCharacter}{noCharacter}");
@@ -324,6 +336,7 @@
             /// <typeparam name="TModel">The model type for commands</typeparam>
             class Menu<TModel>
             {
+                /// <summary>The character used to draw separator lines in the menu</summary>
                 const char separatorCharacter = '-';
 
                 /// <summary>Gets or sets the command table mapping mnemonics to commands</summary>
@@ -437,6 +450,7 @@
             /// <summary>A collection of departments that implements IEnumerable</summary>
             class DepartmentList : IEnumerable<Department>
             {
+                /// <summary>Internal list that stores the department objects</summary>
                 List<Department> departments = new();
 
                 /// <summary>Gets the department at the specified index</summary>
@@ -460,6 +474,7 @@
             /// <summary>A collection of staff members that implements IEnumerable</summary>
             class StaffList : IEnumerable<Staff>
             {
+                /// <summary>Internal list that stores the staff member objects</summary>
                 List<Staff> staffs = new();
 
                 /// <summary>Adds a staff member to the list</summary>
@@ -481,6 +496,7 @@
                 /// <summary>JSON serialization options for pretty printing</summary>
                 static readonly JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true };
 
+                /// <summary>Gets or sets the version number of the application data format</summary>
                 public string Version { get; set; } = "0.1";
 
                 /// <summary>Gets the list of departments (excluded from JSON serialization)</summary>
@@ -511,9 +527,11 @@
                 public Company(DepartmentList departmentList, StaffList staffList)
                     => DepartmentList = departmentList;
 
-                /// <summary>Initializes a new instance of the Company class with default sample data</summary>
+                /// <summary>Initializes a new instance of the Company class</summary>
                 public Company()
                 {
+                    // Sample data is commented out to start with empty data
+                    // Uncomment the following lines to initialize with sample departments and staff
                     //DepartmentList = [new Department(Code: 181, Name: "クラウド開発室"),
                     //                  new Department(Code: 121, Name: "住宅商品開発室"),
                     //                  new Department(Code: 171, Name: "BIM商品開発室"),
@@ -585,18 +603,18 @@
                              .ShowTable();
 
                 /// <summary>Displays all departments in the company</summary>
-                /// <param name="campany">The company model</param>
-                public static void ShowDepartments(Company campany) => Show(campany.DepartmentList);
+                /// <param name="company">The company model</param>
+                public static void ShowDepartments(Company company) => Show(company.DepartmentList);
                 
                 /// <summary>Displays all staff members in the company</summary>
-                /// <param name="campany">The company model</param>
-                public static void ShowStaffs(Company campany) => Show(campany.StaffList);
+                /// <param name="company">The company model</param>
+                public static void ShowStaffs(Company company) => Show(company.StaffList);
 
                 /// <summary>Displays staff members filtered by search text</summary>
-                /// <param name="campany">The company model</param>
+                /// <param name="company">The company model</param>
                 /// <param name="searchText">The text to search for in names, numbers, or departments</param>
-                public static void ShowStaffs(Company campany, string searchText)
-                    => Show(campany.StaffList.Where(staff => staff.Name.Contains(searchText)            ||
+                public static void ShowStaffs(Company company, string searchText)
+                    => Show(company.StaffList.Where(staff => staff.Name.Contains(searchText)            ||
                                                              staff.Number.ToString().Equals(searchText) ||
                                                              staff.Department.Name.Contains(searchText)));
             }
@@ -617,11 +635,11 @@
                 public override string Title => "社員一覧";
 
                 /// <summary>Executes the show staffs feature</summary>
-                /// <param name="campany">The company model</param>
+                /// <param name="company">The company model</param>
                 /// <returns>Always returns true</returns>
-                protected override bool RunFeature(Company campany)
+                protected override bool RunFeature(Company company)
                 {
-                    View.ShowStaffs(campany);
+                    View.ShowStaffs(company);
                     return true;
                 }
             }
@@ -642,9 +660,9 @@
                 string searchString = "";
 
                 /// <summary>Sets the search string from user input</summary>
-                /// <param name="campany">The company model</param>
+                /// <param name="company">The company model</param>
                 /// <returns>True if search string was set successfully</returns>
-                bool SetSearchString(Company campany)
+                bool SetSearchString(Company company)
                 {
                     var newSearchString = GetSearchString();
                     if (newSearchString is null)
@@ -654,11 +672,11 @@
                 }
 
                 /// <summary>Displays the filtered staff results</summary>
-                /// <param name="campany">The company model</param>
+                /// <param name="company">The company model</param>
                 /// <returns>Always returns true</returns>
-                bool ShowStaffs(Company campany)
+                bool ShowStaffs(Company company)
                 {
-                    View.ShowStaffs(campany, searchString);
+                    View.ShowStaffs(company, searchString);
                     return true;
                 }
 
@@ -678,11 +696,11 @@
                 public override string Title => "部署一覧";
 
                 /// <summary>Executes the show departments feature</summary>
-                /// <param name="campany">The company model</param>
+                /// <param name="company">The company model</param>
                 /// <returns>Always returns true</returns>
-                protected override bool RunFeature(Company campany)
+                protected override bool RunFeature(Company company)
                 {
-                    View.ShowDepartments(campany);
+                    View.ShowDepartments(company);
                     return true;
                 }
             }
@@ -717,11 +735,11 @@
                 public override Func<Company, bool>[] Steps => [SetNumber, SetName, SetRuby, SetDeparmentCode, Confirm];
 
                 /// <summary>Sets the staff number from user input</summary>
-                /// <param name="campany">The company model</param>
+                /// <param name="company">The company model</param>
                 /// <returns>True if code was set successfully</returns>
-                public bool SetNumber(Company campany)
+                public bool SetNumber(Company company)
                 {
-                    var newCode = GetNumber(campany);
+                    var newCode = GetNumber(company);
                     if (newCode is null)
                         return false;
                     number = newCode.Value;
@@ -812,8 +830,8 @@
                     return result.isAvailable ? result.item : null;
                 }
 
-                /// <summary>Gets a valid staff name from user input</summary>
-                /// <returns>The staff name or null if cancelled</returns>
+                /// <summary>Gets a valid staff ruby (phonetic reading) from user input</summary>
+                /// <returns>The staff ruby or null if cancelled</returns>
                 static string? GetRuby()
                 {
                     var result = UserInterface.Get<string>(
