@@ -481,6 +481,8 @@
                 /// <summary>JSON serialization options for pretty printing</summary>
                 static readonly JsonSerializerOptions jsonSerializerOptions = new() { WriteIndented = true };
 
+                public string Version { get; set; } = "0.1";
+
                 /// <summary>Gets the list of departments (excluded from JSON serialization)</summary>
                 [JsonIgnore]
                 public DepartmentList DepartmentList { get; private set; }  = new();
