@@ -1,0 +1,1088 @@
+﻿{
+  "SerializableDepartmentList": [
+    {
+      "Code": 181,
+      "Name": "\u30AF\u30E9\u30A6\u30C9\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 121,
+      "Name": "\u4F4F\u5B85\u5546\u54C1\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 171,
+      "Name": "BIM\u5546\u54C1\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 326,
+      "Name": "\u571F\u6728\u5546\u54C1\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 318,
+      "Name": "DX\u5546\u54C1\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 942,
+      "Name": "\u4EBA\u4E8B\u90E8"
+    },
+    {
+      "Code": 125,
+      "Name": "\u5171\u540C\u958B\u767APJ"
+    },
+    {
+      "Code": 173,
+      "Name": "\u30B3\u30F3\u30C6\u30F3\u30C4\u5236\u4F5C\u5BA4"
+    },
+    {
+      "Code": 126,
+      "Name": "\u30AF\u30AA\u30EA\u30C6\u30A3\u30DE\u30CD\u30B8\u30E1\u30F3\u30C8\u5BA4"
+    },
+    {
+      "Code": 129,
+      "Name": "DX\u4E8B\u696D\u63A8\u9032\u5BA4"
+    },
+    {
+      "Code": 321,
+      "Name": "\u30AF\u30AA\u30EA\u30C6\u30A3\u30DE\u30CD\u30B8\u30E1\u30F3\u30C8\u5BA4"
+    },
+    {
+      "Code": 323,
+      "Name": "\u6E2C\u91CF\u5546\u54C1\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 322,
+      "Name": "\u6E2C\u91CF\u5546\u54C1\u4F01\u753B\u5BA4"
+    },
+    {
+      "Code": 327,
+      "Name": "\u571F\u6728\u5546\u54C1\u4F01\u753B\u5BA4"
+    },
+    {
+      "Code": 511,
+      "Name": "\u5EFA\u7BC9\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 512,
+      "Name": "\u571F\u6728\u6E2C\u91CF\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 561,
+      "Name": "\u5EFA\u7BC9\u30B0\u30EB\u30FC\u30D7TW"
+    },
+    {
+      "Code": 562,
+      "Name": "\u571F\u6728\u6E2C\u91CF\u30B0\u30EB\u30FC\u30D7TW"
+    },
+    {
+      "Code": 523,
+      "Name": "\u30DE\u30FC\u30B1\u30C6\u30A3\u30F3\u30B0\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 524,
+      "Name": "\u30B5\u30FC\u30D3\u30B9\u958B\u767A\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 533,
+      "Name": "\u30A4\u30F3\u30D5\u30E9\u958B\u767A\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 550,
+      "Name": "ITS\u4E8B\u696D\u90E8"
+    },
+    {
+      "Code": 913,
+      "Name": "\u4EBA\u6750\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 910,
+      "Name": "R\u0026D\u5BA4"
+    },
+    {
+      "Code": 201,
+      "Name": "\u30B7\u30B9\u30C6\u30E0\u4F01\u753B\u5BA4"
+    },
+    {
+      "Code": 234,
+      "Name": "\u30C7\u30FC\u30BF\u30B5\u30A4\u30A8\u30F3\u30B9\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 156,
+      "Name": "\u30E2\u30D0\u30A4\u30EB\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 789,
+      "Name": "\u7DCF\u52D9\u90E8"
+    },
+    {
+      "Code": 445,
+      "Name": "\u54C1\u8CEA\u4FDD\u8A3C\u5BA4"
+    },
+    {
+      "Code": 667,
+      "Name": "\u60C5\u5831\u30BB\u30AD\u30E5\u30EA\u30C6\u30A3\u5BA4"
+    },
+    {
+      "Code": 578,
+      "Name": "\u30A6\u30A7\u30D6\u30B5\u30FC\u30D3\u30B9\u90E8"
+    },
+    {
+      "Code": 892,
+      "Name": "\u7D4C\u7406\u4F01\u753B\u5BA4"
+    },
+    {
+      "Code": 334,
+      "Name": "\u30E6\u30FC\u30B6\u30FC\u30B5\u30DD\u30FC\u30C8\u90E8"
+    },
+    {
+      "Code": 198,
+      "Name": "\u30A2\u30FC\u30AD\u30C6\u30AF\u30C1\u30E3\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 711,
+      "Name": "\u6559\u80B2\u7814\u4FEE\u5BA4"
+    },
+    {
+      "Code": 456,
+      "Name": "\u55B6\u696D\u4F01\u753B\u90E8"
+    },
+    {
+      "Code": 623,
+      "Name": "\u30D7\u30ED\u30C0\u30AF\u30C8\u30DE\u30CD\u30B8\u30E1\u30F3\u30C8\u5BA4"
+    },
+    {
+      "Code": 377,
+      "Name": "\u30C6\u30B9\u30C8\u81EA\u52D5\u5316\u30B0\u30EB\u30FC\u30D7"
+    },
+    {
+      "Code": 854,
+      "Name": "\u30EA\u30FC\u30AC\u30EB\u30A2\u30D5\u30A7\u30A2\u30BA\u5BA4"
+    },
+    {
+      "Code": 299,
+      "Name": "\u30D1\u30FC\u30C8\u30CA\u30FC\u30B7\u30C3\u30D7\u90E8"
+    },
+    {
+      "Code": 746,
+      "Name": "\u30D5\u30A3\u30FC\u30EB\u30C9\u30B5\u30FC\u30D3\u30B9\u90E8"
+    },
+    {
+      "Code": 588,
+      "Name": "\u30A2\u30B8\u30E3\u30A4\u30EB\u958B\u767A\u5BA4"
+    },
+    {
+      "Code": 401,
+      "Name": "\u30B3\u30F3\u30D7\u30E9\u30A4\u30A2\u30F3\u30B9\u5BA4"
+    },
+    {
+      "Code": 219,
+      "Name": "\u30D3\u30B8\u30CD\u30B9\u30A4\u30F3\u30C6\u30EA\u30B8\u30A7\u30F3\u30B9\u90E8"
+    }
+  ],
+  "SerializableStaffList": [
+    {
+      "Number": 826,
+      "Name": "\u9752\u6728 \u5B5D\u884C",
+      "Ruby": "\u30A2\u30AA\u30AD \u30BF\u30AB\u30E6\u30AD",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1641,
+      "Name": "\u9752\u67F3 \u514B\u5F66",
+      "Ruby": "\u30A2\u30AA\u30E4\u30AE \u30AB\u30C4\u30D2\u30B3",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 277,
+      "Name": "\u4F0A\u4E95 \u6559\u6676",
+      "Ruby": "\u30A4\u30A4 \u30CE\u30EA\u30A2\u30AD",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1437,
+      "Name": "\u98EF\u5CF6 \u5EB7\u5E73",
+      "Ruby": "\u30A4\u30A4\u30B8\u30DE \u30B3\u30A6\u30D8\u30A4",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1686,
+      "Name": "\u690D\u7530 \u5927\u667A",
+      "Ruby": "\u30A6\u30A8\u30C0 \u30C0\u30A4\u30C1",
+      "DepartmentCode": 318
+    },
+    {
+      "Number": 1642,
+      "Name": "\u77F3\u4E95 \u535A\u6587",
+      "Ruby": "\u30A4\u30B7\u30A4 \u30D2\u30ED\u30D5\u30DF",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1567,
+      "Name": "\u77F3\u672C \u62D3\u4E5F",
+      "Ruby": "\u30A4\u30B7\u30E2\u30C8 \u30BF\u30AF\u30E4",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1609,
+      "Name": "\u4E09\u8C37 \u53CB\u91CC\u6075",
+      "Ruby": "\u30DF\u30BF\u30CB \u30E6\u30EA\u30A8",
+      "DepartmentCode": 942
+    },
+    {
+      "Number": 1558,
+      "Name": "\u4F34 \u4E9C\u88D5\u7F8E",
+      "Ruby": "\u30D0\u30F3 \u30A2\u30E6\u30DF",
+      "DepartmentCode": 942
+    },
+    {
+      "Number": 1405,
+      "Name": "\u9752\u5C71 \u82F1\u5E78",
+      "Ruby": "\u30A2\u30AA\u30E4\u30DE \u30D2\u30C7\u30E6\u30AD",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1687,
+      "Name": "\u5185\u91CE \u96C4\u8CB4",
+      "Ruby": "\u30A6\u30C1\u30CE \u30E6\u30A6\u30AD",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1396,
+      "Name": "\u5C0F\u91CE \u5149\u592A\u90CE",
+      "Ruby": "\u30AA\u30CE \u30B3\u30A6\u30BF\u30ED\u30A6",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1664,
+      "Name": "\u4E0B\u53E3 \u5927\u543E",
+      "Ruby": "\u30B7\u30E2\u30B0\u30C1 \u30C0\u30A4\u30B4",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1047,
+      "Name": "\u57CE\u5730 \u512A\u4E00",
+      "Ruby": "\u30B8\u30E7\u30A6\u30C1 \u30E6\u30A6\u30A4\u30C1",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1719,
+      "Name": "\u571F\u6751 \u8CAB\u592A",
+      "Ruby": "\u30C4\u30C1\u30E0\u30E9 \u30AB\u30F3\u30BF",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1721,
+      "Name": "\u8F5F \u96C4\u4ECB",
+      "Ruby": "\u30C8\u30C9\u30ED\u30AD \u30E6\u30A6\u30B9\u30B1",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 832,
+      "Name": "\u897F\u5CA1 \u6D0B\u4E4B",
+      "Ruby": "\u30CB\u30B7\u30AA\u30AB \u30D2\u30ED\u30E6\u30AD",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1471,
+      "Name": "\u91CE\u6FA4 \u771F\u4ECB",
+      "Ruby": "\u30CE\u30B6\u30EF \u30B7\u30F3\u30B9\u30B1",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 466,
+      "Name": "\u6A4B\u672C \u6607\u6CBB",
+      "Ruby": "\u30CF\u30B7\u30E2\u30C8 \u30B7\u30E7\u30A6\u30B8",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1009,
+      "Name": "\u677E\u4E95 \u5B8F\u5FB3",
+      "Ruby": "\u30DE\u30C4\u30A4 \u30D2\u30ED\u30CE\u30EA",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1004,
+      "Name": "\u5BAE\u5D0E \u670B\u7F8E",
+      "Ruby": "\u30DF\u30E4\u30B6\u30AD \u30C8\u30E2\u30DF",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1696,
+      "Name": "\u6751\u4E0A \u3072\u304B\u308A",
+      "Ruby": "\u30E0\u30E9\u30AB\u30DF \u30D2\u30AB\u30EA",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 529,
+      "Name": "\u77E2\u91CE \u7F8E\u9234",
+      "Ruby": "\u30E4\u30CE \u30DF\u30B9\u30BA",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1532,
+      "Name": "\u5C71\u672C \u7FA9\u4EBA",
+      "Ruby": "\u30E4\u30DE\u30E2\u30C8 \u30E8\u30B7\u30D2\u30C8",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1080,
+      "Name": "\u5927\u77E2\u5834 \u5145",
+      "Ruby": "\u30AA\u30AA\u30E4\u30D0 \u30DF\u30C4\u30EB",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1715,
+      "Name": "\u5317\u5C71 \u548C\u6A39",
+      "Ruby": "\u30AD\u30BF\u30E4\u30DE \u30AB\u30BA\u30AD",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 597,
+      "Name": "\u6728\u6C34 \u4FCA\u6674",
+      "Ruby": "\u30AD\u30DF\u30BA \u30C8\u30B7\u30CF\u30EB",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1059,
+      "Name": "\u695A\u7530 \u96C4\u4E09",
+      "Ruby": "\u30AF\u30B9\u30C0 \u30E6\u30A6\u30BE\u30A6",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1598,
+      "Name": "\u4F50\u3005\u6728 \u771F\u5E06",
+      "Ruby": "\u30B5\u30B5\u30AD \u30DE\u30DB",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 764,
+      "Name": "\u6FA4\u7530 \u986F\u5FB3",
+      "Ruby": "\u30B5\u30EF\u30C0 \u30A2\u30AD\u30CE\u30EA",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1692,
+      "Name": "\u9AD9\u5CF6 \u7531\u8CB4",
+      "Ruby": "\u30BF\u30AB\u30B7\u30DE \u30E8\u30B7\u30AD",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1542,
+      "Name": "\u7530\u5009 \u660C\u548C",
+      "Ruby": "\u30BF\u30AF\u30E9 \u30DE\u30B5\u30AB\u30BA",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 471,
+      "Name": "\u7AF9\u5185 \u771F\u5BFF\u7F8E",
+      "Ruby": "\u30BF\u30B1\u30A6\u30C1 \u30DE\u30B9\u30DF",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1502,
+      "Name": "\u8C37\u539F \u5EB7\u4ECB",
+      "Ruby": "\u30BF\u30CB\u30CF\u30E9 \u30B3\u30A6\u30B9\u30B1",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1694,
+      "Name": "\u6A4B\u672C \u4F51\u54C9",
+      "Ruby": "\u30CF\u30B7\u30E2\u30C8 \u30E6\u30A6\u30E4",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1079,
+      "Name": "\u6797 \u5F25\u5B8F",
+      "Ruby": "\u30CF\u30E4\u30B7 \u30E4\u30B9\u30D2\u30ED",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1560,
+      "Name": "\u524D\u7530 \u548C\u4E5F",
+      "Ruby": "\u30DE\u30A8\u30C0 \u30AB\u30BA\u30E4",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1048,
+      "Name": "\u677E\u5DDD \u654F\u6D0B",
+      "Ruby": "\u30DE\u30C4\u30AB\u30EF \u30C8\u30B7\u30D2\u30ED",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1411,
+      "Name": "\u677E\u5BAE \u656C\u5B50",
+      "Ruby": "\u30DE\u30C4\u30DF\u30E4 \u30B1\u30A4\u30B3",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 278,
+      "Name": "\u4E95\u7F8E \u77E5\u5DF1",
+      "Ruby": "\u30A4\u30DF \u30C8\u30E2\u30AD",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1615,
+      "Name": "\u7B20\u5CF6 \u614E\u4E5F",
+      "Ruby": "\u30AB\u30B5\u30B7\u30DE \u30B7\u30F3\u30E4",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1546,
+      "Name": "\u5317\u5DDD \u76F4\u88D5",
+      "Ruby": "\u30AD\u30BF\u30AC\u30EF \u30CA\u30AA\u30D2\u30ED",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1473,
+      "Name": "\u9F4A\u85E4 \u9EBB\u5E0C",
+      "Ruby": "\u30B5\u30A4\u30C8\u30A6 \u30DE\u30AD",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1663,
+      "Name": "\u5CF6 \u60A0\u4EBA",
+      "Ruby": "\u30B7\u30DE \u30E6\u30A6\u30C8",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1484,
+      "Name": "\u767D\uFA11 \u6B63\u4EBA",
+      "Ruby": "\u30B7\u30E9\u30B5\u30AD \u30DE\u30B5\u30C8",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1063,
+      "Name": "\u9234\u6728 \u5B8F\u5C06",
+      "Ruby": "\u30B9\u30BA\u30AD \u30D2\u30ED\u30DE\u30B5",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1613,
+      "Name": "\u4E2D\u91CE \u9686\u5F18",
+      "Ruby": "\u30CA\u30AB\u30CE \u30BF\u30AB\u30D2\u30ED",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1330,
+      "Name": "\u6A4B\u722A \u6CD5\u5B50",
+      "Ruby": "\u30CF\u30B7\u30C5\u30E1 \u30CE\u30EA\u30B3",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 957,
+      "Name": "\u5411\u5DDD \u4F73\u6C5F",
+      "Ruby": "\u30E0\u30B3\u30A6\u30AC\u30EF \u30E8\u30B7\u30A8",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1441,
+      "Name": "\u68EE\u5EE3 \u8A8C\u30E2",
+      "Ruby": "\u30EA\u30D2\u30ED \u30DE\u30B3\u30C8",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1729,
+      "Name": "\u5C71\u7530 \u5C1A\u5B8F",
+      "Ruby": "\u30E4\u30DE\u30C0 \u30CA\u30AA\u30D2\u30ED",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1801,
+      "Name": "\u7530\u4E2D \u592A\u90CE",
+      "Ruby": "\u30BF\u30CA\u30AB \u30BF\u30ED\u30A6",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1802,
+      "Name": "\u4F50\u85E4 \u82B1\u5B50",
+      "Ruby": "\u30B5\u30C8\u30A6 \u30CF\u30CA\u30B3",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1803,
+      "Name": "\u9234\u6728 \u4E00\u90CE",
+      "Ruby": "\u30B9\u30BA\u30AD \u30A4\u30C1\u30ED\u30A6",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1804,
+      "Name": "\u9AD8\u6A4B \u7F8E\u54B2",
+      "Ruby": "\u30BF\u30AB\u30CF\u30B7 \u30DF\u30B5\u30AD",
+      "DepartmentCode": 326
+    },
+    {
+      "Number": 1805,
+      "Name": "\u4F0A\u85E4 \u5065\u592A",
+      "Ruby": "\u30A4\u30C8\u30A6 \u30B1\u30F3\u30BF",
+      "DepartmentCode": 318
+    },
+    {
+      "Number": 1806,
+      "Name": "\u6E21\u8FBA \u512A\u5B50",
+      "Ruby": "\u30EF\u30BF\u30CA\u30D9 \u30E6\u30A6\u30B3",
+      "DepartmentCode": 942
+    },
+    {
+      "Number": 1807,
+      "Name": "\u5C71\u672C \u5927\u8F14",
+      "Ruby": "\u30E4\u30DE\u30E2\u30C8 \u30C0\u30A4\u30B9\u30B1",
+      "DepartmentCode": 125
+    },
+    {
+      "Number": 1808,
+      "Name": "\u4E2D\u6751 \u3042\u304B\u308A",
+      "Ruby": "\u30CA\u30AB\u30E0\u30E9 \u30A2\u30AB\u30EA",
+      "DepartmentCode": 173
+    },
+    {
+      "Number": 1809,
+      "Name": "\u5C0F\u6797 \u7FD4\u592A",
+      "Ruby": "\u30B3\u30D0\u30E4\u30B7 \u30B7\u30E7\u30A6\u30BF",
+      "DepartmentCode": 126
+    },
+    {
+      "Number": 1810,
+      "Name": "\u52A0\u85E4 \u771F\u7406",
+      "Ruby": "\u30AB\u30C8\u30A6 \u30DE\u30EA",
+      "DepartmentCode": 129
+    },
+    {
+      "Number": 1811,
+      "Name": "\u5409\u7530 \u62D3\u6D77",
+      "Ruby": "\u30E8\u30B7\u30C0 \u30BF\u30AF\u30DF",
+      "DepartmentCode": 321
+    },
+    {
+      "Number": 1812,
+      "Name": "\u5C71\u7530 \u5343\u6625",
+      "Ruby": "\u30E4\u30DE\u30C0 \u30C1\u30CF\u30EB",
+      "DepartmentCode": 323
+    },
+    {
+      "Number": 1813,
+      "Name": "\u4F50\u3005\u6728 \u96C4\u4ECB",
+      "Ruby": "\u30B5\u30B5\u30AD \u30E6\u30A6\u30B9\u30B1",
+      "DepartmentCode": 322
+    },
+    {
+      "Number": 1814,
+      "Name": "\u677E\u672C \u5F69\u9999",
+      "Ruby": "\u30DE\u30C4\u30E2\u30C8 \u30A2\u30E4\u30AB",
+      "DepartmentCode": 327
+    },
+    {
+      "Number": 1815,
+      "Name": "\u4E95\u4E0A \u548C\u4E5F",
+      "Ruby": "\u30A4\u30CE\u30A6\u30A8 \u30AB\u30BA\u30E4",
+      "DepartmentCode": 511
+    },
+    {
+      "Number": 1816,
+      "Name": "\u6728\u6751 \u7406\u6075",
+      "Ruby": "\u30AD\u30E0\u30E9 \u30EA\u30A8",
+      "DepartmentCode": 512
+    },
+    {
+      "Number": 1817,
+      "Name": "\u6797 \u6B63\u4EBA",
+      "Ruby": "\u30CF\u30E4\u30B7 \u30DE\u30B5\u30C8",
+      "DepartmentCode": 561
+    },
+    {
+      "Number": 1818,
+      "Name": "\u6E05\u6C34 \u307F\u3069\u308A",
+      "Ruby": "\u30B7\u30DF\u30BA \u30DF\u30C9\u30EA",
+      "DepartmentCode": 562
+    },
+    {
+      "Number": 1819,
+      "Name": "\u5C71\u5D0E \u76F4\u6A39",
+      "Ruby": "\u30E4\u30DE\u30B6\u30AD \u30CA\u30AA\u30AD",
+      "DepartmentCode": 523
+    },
+    {
+      "Number": 1820,
+      "Name": "\u68EE\u7530 \u611B\u7F8E",
+      "Ruby": "\u30E2\u30EA\u30BF \u30DE\u30CA\u30DF",
+      "DepartmentCode": 524
+    },
+    {
+      "Number": 1821,
+      "Name": "\u6C60\u7530 \u4FEE",
+      "Ruby": "\u30A4\u30B1\u30C0 \u30AA\u30B5\u30E0",
+      "DepartmentCode": 533
+    },
+    {
+      "Number": 1822,
+      "Name": "\u6A4B\u672C \u4E45\u7F8E\u5B50",
+      "Ruby": "\u30CF\u30B7\u30E2\u30C8 \u30AF\u30DF\u30B3",
+      "DepartmentCode": 550
+    },
+    {
+      "Number": 1823,
+      "Name": "\u77F3\u5DDD \u535A\u4E4B",
+      "Ruby": "\u30A4\u30B7\u30AB\u30EF \u30D2\u30ED\u30E6\u30AD",
+      "DepartmentCode": 913
+    },
+    {
+      "Number": 1824,
+      "Name": "\u524D\u7530 \u9EBB\u8863",
+      "Ruby": "\u30DE\u30A8\u30C0 \u30DE\u30A4",
+      "DepartmentCode": 910
+    },
+    {
+      "Number": 1825,
+      "Name": "\u85E4\u7530 \u9686\u5FD7",
+      "Ruby": "\u30D5\u30B8\u30BF \u30BF\u30AB\u30B7",
+      "DepartmentCode": 201
+    },
+    {
+      "Number": 1826,
+      "Name": "\u5CA1\u7530 \u6C99\u7E54",
+      "Ruby": "\u30AA\u30AB\u30C0 \u30B5\u30AA\u30EA",
+      "DepartmentCode": 234
+    },
+    {
+      "Number": 1827,
+      "Name": "\u9577\u8C37\u5DDD \u4EAE",
+      "Ruby": "\u30CF\u30BB\u30AC\u30EF \u30EA\u30E7\u30A6",
+      "DepartmentCode": 156
+    },
+    {
+      "Number": 1828,
+      "Name": "\u6751\u4E0A \u6075\u5B50",
+      "Ruby": "\u30E0\u30E9\u30AB\u30DF \u30B1\u30A4\u30B3",
+      "DepartmentCode": 789
+    },
+    {
+      "Number": 1829,
+      "Name": "\u8FD1\u85E4 \u614E\u4E00",
+      "Ruby": "\u30B3\u30F3\u30C9\u30A6 \u30B7\u30F3\u30A4\u30C1",
+      "DepartmentCode": 445
+    },
+    {
+      "Number": 1830,
+      "Name": "\u5742\u672C \u7531\u7D00",
+      "Ruby": "\u30B5\u30AB\u30E2\u30C8 \u30E6\u30AD",
+      "DepartmentCode": 667
+    },
+    {
+      "Number": 1831,
+      "Name": "\u9060\u85E4 \u5149\u4E00",
+      "Ruby": "\u30A8\u30F3\u30C9\u30A6 \u30B3\u30A6\u30A4\u30C1",
+      "DepartmentCode": 578
+    },
+    {
+      "Number": 1832,
+      "Name": "\u9752\u6728 \u7D7D\u5B50",
+      "Ruby": "\u30A2\u30AA\u30AD \u30A2\u30E4\u30B3",
+      "DepartmentCode": 892
+    },
+    {
+      "Number": 1833,
+      "Name": "\u897F\u6751 \u52C7\u592A",
+      "Ruby": "\u30CB\u30B7\u30E0\u30E9 \u30E6\u30A6\u30BF",
+      "DepartmentCode": 334
+    },
+    {
+      "Number": 1834,
+      "Name": "\u798F\u7530 \u667A\u5B50",
+      "Ruby": "\u30D5\u30AF\u30C0 \u30C8\u30E2\u30B3",
+      "DepartmentCode": 198
+    },
+    {
+      "Number": 1835,
+      "Name": "\u4E09\u6D66 \u6D0B\u5E73",
+      "Ruby": "\u30DF\u30A6\u30E9 \u30E8\u30A6\u30D8\u30A4",
+      "DepartmentCode": 711
+    },
+    {
+      "Number": 1836,
+      "Name": "\u85E4\u539F \u5948\u3005",
+      "Ruby": "\u30D5\u30B8\u30EF\u30E9 \u30CA\u30CA",
+      "DepartmentCode": 456
+    },
+    {
+      "Number": 1837,
+      "Name": "\u592A\u7530 \u660E",
+      "Ruby": "\u30AA\u30AA\u30BF \u30A2\u30AD\u30E9",
+      "DepartmentCode": 623
+    },
+    {
+      "Number": 1838,
+      "Name": "\u65B0\u4E95 \u826F\u5B50",
+      "Ruby": "\u30A2\u30E9\u30A4 \u30E8\u30B7\u30B3",
+      "DepartmentCode": 377
+    },
+    {
+      "Number": 1839,
+      "Name": "\u7AF9\u5185 \u609F",
+      "Ruby": "\u30BF\u30B1\u30A6\u30C1 \u30B5\u30C8\u30EB",
+      "DepartmentCode": 854
+    },
+    {
+      "Number": 1840,
+      "Name": "\u91D1\u5B50 \u7F8E\u7A42",
+      "Ruby": "\u30AB\u30CD\u30B3 \u30DF\u30DB",
+      "DepartmentCode": 299
+    },
+    {
+      "Number": 1841,
+      "Name": "\u5C0F\u5DDD \u4FCA\u4ECB",
+      "Ruby": "\u30AA\u30AC\u30EF \u30B7\u30E5\u30F3\u30B9\u30B1",
+      "DepartmentCode": 746
+    },
+    {
+      "Number": 1842,
+      "Name": "\u4E2D\u5CF6 \u77B3",
+      "Ruby": "\u30CA\u30AB\u30B8\u30DE \u30D2\u30C8\u30DF",
+      "DepartmentCode": 588
+    },
+    {
+      "Number": 1843,
+      "Name": "\u539F\u7530 \u8FB0\u96C4",
+      "Ruby": "\u30CF\u30E9\u30C0 \u30BF\u30C4\u30AA",
+      "DepartmentCode": 401
+    },
+    {
+      "Number": 1844,
+      "Name": "\u6CB3\u91CE \u9EBB\u7F8E",
+      "Ruby": "\u30AB\u30EF\u30CE \u30A2\u30B5\u30DF",
+      "DepartmentCode": 219
+    },
+    {
+      "Number": 1845,
+      "Name": "\u9152\u4E95 \u5EB7\u5F18",
+      "Ruby": "\u30B5\u30AB\u30A4 \u30E4\u30B9\u30D2\u30ED",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1846,
+      "Name": "\u7530\u6751 \u9999\u7E54",
+      "Ruby": "\u30BF\u30E0\u30E9 \u30AB\u30AA\u30EA",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1847,
+      "Name": "\u5B89\u7530 \u7D14",
+      "Ruby": "\u30E4\u30B9\u30C0 \u30B8\u30E5\u30F3",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1848,
+      "Name": "\u677E\u7530 \u96C5\u5B50",
+      "Ruby": "\u30DE\u30C4\u30C0 \u30DE\u30B5\u30B3",
+      "DepartmentCode": 326
+    },
+    {
+      "Number": 1849,
+      "Name": "\u4E0A\u7530 \u5065",
+      "Ruby": "\u30A6\u30A8\u30C0 \u30B1\u30F3",
+      "DepartmentCode": 318
+    },
+    {
+      "Number": 1850,
+      "Name": "\u5927\u897F \u771F\u592E",
+      "Ruby": "\u30AA\u30AA\u30CB\u30B7 \u30DE\u30AA",
+      "DepartmentCode": 942
+    },
+    {
+      "Number": 1851,
+      "Name": "\u6749\u5C71 \u653F\u7537",
+      "Ruby": "\u30B9\u30AE\u30E4\u30DE \u30DE\u30B5\u30AA",
+      "DepartmentCode": 125
+    },
+    {
+      "Number": 1852,
+      "Name": "\u5BAE\u5D0E \u8475",
+      "Ruby": "\u30DF\u30E4\u30B6\u30AD \u30A2\u30AA\u30A4",
+      "DepartmentCode": 173
+    },
+    {
+      "Number": 1853,
+      "Name": "\u68EE\u672C \u6D69\u4E8C",
+      "Ruby": "\u30E2\u30EA\u30E2\u30C8 \u30B3\u30A6\u30B8",
+      "DepartmentCode": 126
+    },
+    {
+      "Number": 1854,
+      "Name": "\u5897\u7530 \u60A6\u5B50",
+      "Ruby": "\u30DE\u30B9\u30C0 \u30A8\u30C4\u30B3",
+      "DepartmentCode": 129
+    },
+    {
+      "Number": 1855,
+      "Name": "\u5C0F\u91CE\u5BFA \u5FB9",
+      "Ruby": "\u30AA\u30CE\u30C7\u30E9 \u30C8\u30AA\u30EB",
+      "DepartmentCode": 321
+    },
+    {
+      "Number": 1856,
+      "Name": "\u5CA9\u5D0E \u4E9C\u5E0C",
+      "Ruby": "\u30A4\u30EF\u30B5\u30AD \u30A2\u30AD",
+      "DepartmentCode": 323
+    },
+    {
+      "Number": 1857,
+      "Name": "\u5E73\u91CE \u967D\u4ECB",
+      "Ruby": "\u30D2\u30E9\u30CE \u30E8\u30A6\u30B9\u30B1",
+      "DepartmentCode": 322
+    },
+    {
+      "Number": 1858,
+      "Name": "\u69CE\u672C \u6674\u7F8E",
+      "Ruby": "\u30A8\u30CE\u30E2\u30C8 \u30CF\u30EB\u30DF",
+      "DepartmentCode": 327
+    },
+    {
+      "Number": 1859,
+      "Name": "\u6C34\u91CE \u6DF3",
+      "Ruby": "\u30DF\u30BA\u30CE \u30B8\u30E5\u30F3",
+      "DepartmentCode": 511
+    },
+    {
+      "Number": 1860,
+      "Name": "\u83CA\u5730 \u685C",
+      "Ruby": "\u30AD\u30AF\u30C1 \u30B5\u30AF\u30E9",
+      "DepartmentCode": 512
+    },
+    {
+      "Number": 1861,
+      "Name": "\u5C0F\u5C71 \u96C5\u53F2",
+      "Ruby": "\u30B3\u30E4\u30DE \u30DE\u30B5\u30B7",
+      "DepartmentCode": 561
+    },
+    {
+      "Number": 1862,
+      "Name": "\u5927\u585A \u606D\u5B50",
+      "Ruby": "\u30AA\u30AA\u30C4\u30AB \u30AD\u30E7\u30A6\u30B3",
+      "DepartmentCode": 562
+    },
+    {
+      "Number": 1863,
+      "Name": "\u67F4\u7530 \u4EA8",
+      "Ruby": "\u30B7\u30D0\u30BF \u30C8\u30AA\u30EB",
+      "DepartmentCode": 523
+    },
+    {
+      "Number": 1864,
+      "Name": "\u95A2\u6839 \u672A\u6765",
+      "Ruby": "\u30BB\u30AD\u30CD \u30DF\u30E9\u30A4",
+      "DepartmentCode": 524
+    },
+    {
+      "Number": 1865,
+      "Name": "\u5BAE\u672C \u4FE1\u4E5F",
+      "Ruby": "\u30DF\u30E4\u30E2\u30C8 \u30B7\u30F3\u30E4",
+      "DepartmentCode": 533
+    },
+    {
+      "Number": 1866,
+      "Name": "\u5185\u7530 \u88D5\u7F8E",
+      "Ruby": "\u30A6\u30C1\u30C0 \u30D2\u30ED\u30DF",
+      "DepartmentCode": 550
+    },
+    {
+      "Number": 1867,
+      "Name": "\u6A2A\u5C71 \u525B",
+      "Ruby": "\u30E8\u30B3\u30E4\u30DE \u30C4\u30E8\u30B7",
+      "DepartmentCode": 913
+    },
+    {
+      "Number": 1868,
+      "Name": "\u5C71\u53E3 \u96EA\u7D75",
+      "Ruby": "\u30E4\u30DE\u30B0\u30C1 \u30E6\u30AD\u30A8",
+      "DepartmentCode": 910
+    },
+    {
+      "Number": 1869,
+      "Name": "\u5DE5\u85E4 \u5B66",
+      "Ruby": "\u30AF\u30C9\u30A6 \u30DE\u30CA\u30D6",
+      "DepartmentCode": 201
+    },
+    {
+      "Number": 1870,
+      "Name": "\u4ECA\u4E95 \u6804\u5B50",
+      "Ruby": "\u30A4\u30DE\u30A4 \u30A8\u30A4\u30B3",
+      "DepartmentCode": 234
+    },
+    {
+      "Number": 1871,
+      "Name": "\u658E\u85E4 \u8C4A",
+      "Ruby": "\u30B5\u30A4\u30C8\u30A6 \u30E6\u30BF\u30AB",
+      "DepartmentCode": 156
+    },
+    {
+      "Number": 1872,
+      "Name": "\u897F\u7530 \u5343\u6075",
+      "Ruby": "\u30CB\u30B7\u30C0 \u30C1\u30A8",
+      "DepartmentCode": 789
+    },
+    {
+      "Number": 1873,
+      "Name": "\u83C5\u91CE \u79C0\u660E",
+      "Ruby": "\u30AB\u30F3\u30CE \u30D2\u30C7\u30A2\u30AD",
+      "DepartmentCode": 445
+    },
+    {
+      "Number": 1874,
+      "Name": "\u5F8C\u85E4 \u8A69\u7E54",
+      "Ruby": "\u30B4\u30C8\u30A6 \u30B7\u30AA\u30EA",
+      "DepartmentCode": 667
+    },
+    {
+      "Number": 1875,
+      "Name": "\u6C38\u4E95 \u826F\u4E00",
+      "Ruby": "\u30CA\u30AC\u30A4 \u30EA\u30E7\u30A6\u30A4\u30C1",
+      "DepartmentCode": 578
+    },
+    {
+      "Number": 1876,
+      "Name": "\u77F3\u7530 \u771F\u7D00",
+      "Ruby": "\u30A4\u30B7\u30C0 \u30DE\u30AD",
+      "DepartmentCode": 892
+    },
+    {
+      "Number": 1877,
+      "Name": "\u9AD8\u6728 \u5FE0",
+      "Ruby": "\u30BF\u30AB\u30AE \u30BF\u30C0\u30B7",
+      "DepartmentCode": 334
+    },
+    {
+      "Number": 1878,
+      "Name": "\u4E38\u5C71 \u512A\u9999",
+      "Ruby": "\u30DE\u30EB\u30E4\u30DE \u30E6\u30A6\u30AB",
+      "DepartmentCode": 198
+    },
+    {
+      "Number": 1879,
+      "Name": "\u677E\u4E95 \u654F\u592B",
+      "Ruby": "\u30DE\u30C4\u30A4 \u30C8\u30B7\u30AA",
+      "DepartmentCode": 711
+    },
+    {
+      "Number": 1880,
+      "Name": "\u91CE\u53E3 \u7F8E\u7531\u7D00",
+      "Ruby": "\u30CE\u30B0\u30C1 \u30DF\u30E6\u30AD",
+      "DepartmentCode": 456
+    },
+    {
+      "Number": 1881,
+      "Name": "\u5409\u5DDD \u54F2\u4E5F",
+      "Ruby": "\u30E8\u30B7\u30AB\u30EF \u30C6\u30C4\u30E4",
+      "DepartmentCode": 623
+    },
+    {
+      "Number": 1882,
+      "Name": "\u98EF\u7530 \u7F8E\u4F73",
+      "Ruby": "\u30A4\u30A4\u30C0 \u30DF\u30AB",
+      "DepartmentCode": 377
+    },
+    {
+      "Number": 1883,
+      "Name": "\u5927\u5009 \u82F1\u96C4",
+      "Ruby": "\u30AA\u30AA\u30AF\u30E9 \u30D2\u30C7\u30AA",
+      "DepartmentCode": 854
+    },
+    {
+      "Number": 1884,
+      "Name": "\u53E4\u5DDD \u7D14\u5B50",
+      "Ruby": "\u30D5\u30EB\u30AB\u30EF \u30B8\u30E5\u30F3\u30B3",
+      "DepartmentCode": 299
+    },
+    {
+      "Number": 1885,
+      "Name": "\u5800\u4E95 \u52DD",
+      "Ruby": "\u30DB\u30EA\u30A4 \u30DE\u30B5\u30EB",
+      "DepartmentCode": 746
+    },
+    {
+      "Number": 1886,
+      "Name": "\u5317\u6751 \u7406\u6C99",
+      "Ruby": "\u30AD\u30BF\u30E0\u30E9 \u30EA\u30B5",
+      "DepartmentCode": 588
+    },
+    {
+      "Number": 1887,
+      "Name": "\u9808\u85E4 \u6B63",
+      "Ruby": "\u30B9\u30C9\u30A6 \u30BF\u30C0\u30B7",
+      "DepartmentCode": 401
+    },
+    {
+      "Number": 1888,
+      "Name": "\u6E0B\u8C37 \u548C\u7F8E",
+      "Ruby": "\u30B7\u30D6\u30E4 \u30AB\u30BA\u30DF",
+      "DepartmentCode": 219
+    },
+    {
+      "Number": 1889,
+      "Name": "\u671B\u6708 \u76F4\u4EBA",
+      "Ruby": "\u30E2\u30C1\u30BA\u30AD \u30CA\u30AA\u30C8",
+      "DepartmentCode": 181
+    },
+    {
+      "Number": 1890,
+      "Name": "\u7247\u6850 \u6075",
+      "Ruby": "\u30AB\u30BF\u30AE\u30EA \u30E1\u30B0\u30DF",
+      "DepartmentCode": 121
+    },
+    {
+      "Number": 1891,
+      "Name": "\u8C37\u53E3 \u6643",
+      "Ruby": "\u30BF\u30CB\u30B0\u30C1 \u30A2\u30AD\u30E9",
+      "DepartmentCode": 171
+    },
+    {
+      "Number": 1892,
+      "Name": "\u5CA1\u5D0E \u7D7D",
+      "Ruby": "\u30AA\u30AB\u30B6\u30AD \u30A2\u30E4",
+      "DepartmentCode": 326
+    },
+    {
+      "Number": 1893,
+      "Name": "\u5CF6\u7530 \u662D\u592B",
+      "Ruby": "\u30B7\u30DE\u30C0 \u30A2\u30AD\u30AA",
+      "DepartmentCode": 318
+    },
+    {
+      "Number": 1894,
+      "Name": "\u7C73\u7530 \u667A\u7F8E",
+      "Ruby": "\u30E8\u30CD\u30C0 \u30C8\u30E2\u30DF",
+      "DepartmentCode": 942
+    },
+    {
+      "Number": 1895,
+      "Name": "\u672C\u7530 \u6D69",
+      "Ruby": "\u30DB\u30F3\u30C0 \u30D2\u30ED\u30B7",
+      "DepartmentCode": 125
+    },
+    {
+      "Number": 1896,
+      "Name": "\u7530\u5CF6 \u68A8\u82B1",
+      "Ruby": "\u30BF\u30B8\u30DE \u30EA\u30AB",
+      "DepartmentCode": 173
+    },
+    {
+      "Number": 1897,
+      "Name": "\u79CB\u5C71 \u9686",
+      "Ruby": "\u30A2\u30AD\u30E4\u30DE \u30BF\u30AB\u30B7",
+      "DepartmentCode": 126
+    },
+    {
+      "Number": 1898,
+      "Name": "\u5965\u6751 \u5E78\u5B50",
+      "Ruby": "\u30AA\u30AF\u30E0\u30E9 \u30B5\u30C1\u30B3",
+      "DepartmentCode": 129
+    },
+    {
+      "Number": 1899,
+      "Name": "\u6D5C\u7530 \u5149\u7537",
+      "Ruby": "\u30CF\u30DE\u30C0 \u30DF\u30C4\u30AA",
+      "DepartmentCode": 321
+    },
+    {
+      "Number": 1900,
+      "Name": "\u77E2\u91CE \u5C0F\u767E\u5408",
+      "Ruby": "\u30E4\u30CE \u30B5\u30E6\u30EA",
+      "DepartmentCode": 323
+    }
+  ]
+}
