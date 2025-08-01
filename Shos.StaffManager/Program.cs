@@ -1,4 +1,7 @@
-﻿namespace StaffManager
+﻿using StaffManager.Application.Models;
+using System.Reflection;
+
+namespace StaffManager
 {
     namespace Common
     {
@@ -386,7 +389,7 @@
                 /// <summary>Initializes a new instance of the SerializeException class</summary>
                 /// <param name="message">The error message</param>
                 public SerializeException(string message) : base(message)
-                {}
+                { }
             }
 
             /// <summary>Represents a department with code and name</summary>
@@ -395,13 +398,13 @@
             record Department(int Code, string Name)
             {
                 /// <summary>Minimum allowed department code</summary>
-                public const int MinimumCode       = 100;
+                public const int MinimumCode = 100;
                 /// <summary>Maximum allowed department code</summary>
-                public const int MaximumCode       = 999;
+                public const int MaximumCode = 999;
                 /// <summary>Minimum allowed name length</summary>
-                public const int MinimumNameLength =   1;
+                public const int MinimumNameLength = 1;
                 /// <summary>Maximum allowed name length</summary>
-                public const int MaximumNameLength =  30;
+                public const int MaximumNameLength = 30;
             }
 
             /// <summary>Represents a staff member with number, name, ruby reading, and department</summary>
@@ -412,13 +415,13 @@
             record Staff(int Number, string Name, string Ruby, Department Department)
             {
                 /// <summary>Minimum allowed staff number</summary>
-                public const int MinimumNumber     =    1;
+                public const int MinimumNumber = 1;
                 /// <summary>Maximum allowed staff number</summary>
-                public const int MaximumNumber     = 9999;
+                public const int MaximumNumber = 9999;
                 /// <summary>Minimum allowed name length</summary>
-                public const int MinimumNameLength =    1;
+                public const int MinimumNameLength = 1;
                 /// <summary>Maximum allowed name length</summary>
-                public const int MaximumNameLength =   30;
+                public const int MaximumNameLength = 30;
             }
 
             /// <summary>Serializable version of Staff record that stores department as code instead of object</summary>
@@ -465,7 +468,7 @@
                 /// <summary>Returns an enumerator for the departments</summary>
                 /// <returns>An enumerator for Department objects</returns>
                 public IEnumerator<Department> GetEnumerator() => departments.GetEnumerator();
-                
+
                 /// <summary>Returns a non-generic enumerator</summary>
                 /// <returns>An enumerator</returns>
                 IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -484,7 +487,7 @@
                 /// <summary>Returns an enumerator for the staff members</summary>
                 /// <returns>An enumerator for Staff objects</returns>
                 public IEnumerator<Staff> GetEnumerator() => staffs.GetEnumerator();
-                
+
                 /// <summary>Returns a non-generic enumerator</summary>
                 /// <returns>An enumerator</returns>
                 IEnumerator IEnumerable.GetEnumerator() => GetEnumerator();
@@ -501,10 +504,10 @@
 
                 /// <summary>Gets the list of departments (excluded from JSON serialization)</summary>
                 [JsonIgnore]
-                public DepartmentList DepartmentList { get; private set; }  = new();
+                public DepartmentList DepartmentList { get; private set; } = new();
                 /// <summary>Gets the list of staff members (excluded from JSON serialization)</summary>
                 [JsonIgnore]
-                public StaffList      StaffList      { get; private set; } = new();
+                public StaffList StaffList { get; private set; } = new();
 
                 /// <summary>Gets or sets the serializable department list for JSON operations</summary>
                 public Department[] SerializableDepartmentList
@@ -529,7 +532,7 @@
 
                 /// <summary>Initializes a new instance of the Company class</summary>
                 public Company()
-                {}
+                { }
 
                 /// <summary>Saves the company data to a JSON file</summary>
                 /// <param name="filePath">The path to save the file</param>
@@ -577,8 +580,8 @@
                     => staffs.OrderBy(staff => staff.Department.Code)
                              .ThenBy(staff => staff.Number)
                              .Select(staff => new {
-                                 Number     = $"{staff.Number:D4}",
-                                 Name       = $"{staff.Name}({staff.Ruby})",
+                                 Number = $"{staff.Number:D4}",
+                                 Name = $"{staff.Name}({staff.Ruby})",
                                  Department = $"{staff.Department.Name}({staff.Department.Code})"
                              })
                              .ShowTable();
@@ -586,7 +589,7 @@
                 /// <summary>Displays all departments in the company</summary>
                 /// <param name="company">The company model</param>
                 public static void ShowDepartments(Company company) => Show(company.DepartmentList);
-                
+
                 /// <summary>Displays all staff members in the company</summary>
                 /// <param name="company">The company model</param>
                 public static void ShowStaffs(Company company) => Show(company.StaffList);
@@ -595,7 +598,7 @@
                 /// <param name="company">The company model</param>
                 /// <param name="searchText">The text to search for in names, numbers, or departments</param>
                 public static void ShowStaffs(Company company, string searchText)
-                    => Show(company.StaffList.Where(staff => staff.Name.Contains(searchText)            ||
+                    => Show(company.StaffList.Where(staff => staff.Name.Contains(searchText) ||
                                                              staff.Number.ToString().Equals(searchText) ||
                                                              staff.Department.Name.Contains(searchText)));
             }
@@ -630,10 +633,10 @@
             {
                 /// <summary>Gets the command mode (repeatable)</summary>
                 public override CommandMode Mode => CommandMode.Repeat;
-                
+
                 /// <summary>Gets the title of the command</summary>
                 public override string Title => "社員検索";
-                
+
                 /// <summary>Gets the steps for the search command</summary>
                 public override Func<Company, bool>[] Steps => [SetSearchString, ShowStaffs];
 
@@ -664,7 +667,7 @@
                 /// <summary>Gets the search string from user input</summary>
                 /// <returns>The search string or null if cancelled</returns>
                 static string? GetSearchString()
-                { 
+                {
                     var result = UserInterface.Get<string>(message: "検索文字列を入力してください", rules: []);
                     return result.isAvailable ? result.item : null;
                 }
@@ -708,10 +711,10 @@
 
                 /// <summary>Gets the command mode (repeatable)</summary>
                 public override CommandMode Mode => CommandMode.Repeat;
-                
+
                 /// <summary>Gets the title of the command</summary>
                 public override string Title => "社員追加";
-                
+
                 /// <summary>Gets the steps for adding a staff</summary>
                 public override Func<Company, bool>[] Steps => [SetNumber, SetName, SetRuby, SetDeparmentCode, Confirm];
 
@@ -931,7 +934,7 @@
             {
                 /// <summary>Gets the command mode (exit)</summary>
                 public override CommandMode Mode => CommandMode.Exit;
-                
+
                 /// <summary>Gets the title of the command</summary>
                 public override string Title => "終了";
 
@@ -988,22 +991,48 @@
         class Program
         {
             /// <summary>The file path for saving/loading company data</summary>
-            const string dataFilePath    = "FC.StaffManager.json";
+            const string dataFilePath = "FC.StaffManager.json";
             /// <summary>The name of the application</summary>
             const string applicationName = "FC.StaffManager";
 
             /// <summary>The company data model</summary>
-            Models.Company             company = Company.Load(dataFilePath);
+            Company company = null!;
             /// <summary>The command manager for handling user operations</summary>
             Controllers.CommandManager operationManager = new();
 
             /// <summary>Runs the main application loop</summary>
             void Run()
             {
+                if (!Load())
+                    return;
+
                 ShowTitle();
                 while (operationManager.Run(company))
                     ;
-                company.Save(dataFilePath);
+                Save();
+            }
+
+            bool Load()
+            {
+                try {
+                    /// <summary>The company data model</summary>
+                    company = Company.Load(dataFilePath);
+                    return true;
+                } catch (Exception ex) {
+                    UserInterface.ShowError($"データが読み込めませんでした。\n{ex.Message}");
+                    return false;
+                }
+            }
+
+            bool Save()
+            {
+                try {
+                    company.Save(dataFilePath);
+                    return true;
+                } catch (Exception ex) {
+                    UserInterface.ShowError($"データが書き込めませんでした。\n{ex.Message}");
+                    return false;
+                }
             }
 
             /// <summary>Displays the application title</summary>
