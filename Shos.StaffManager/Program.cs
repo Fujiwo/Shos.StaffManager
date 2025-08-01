@@ -1,7 +1,4 @@
-﻿using StaffManager.Application.Models;
-using System.Reflection;
-
-namespace StaffManager
+﻿namespace StaffManager
 {
     namespace Common
     {
@@ -528,7 +525,10 @@ namespace StaffManager
                 /// <param name="staffList">The staff list</param>
                 [JsonConstructor]
                 public Company(DepartmentList departmentList, StaffList staffList)
-                    => DepartmentList = departmentList;
+                {
+                    DepartmentList = departmentList;
+                    StaffList = staffList;
+                }
 
                 /// <summary>Initializes a new instance of the Company class</summary>
                 public Company()
@@ -699,7 +699,7 @@ namespace StaffManager
                 /// <summary>Label for department name input</summary>
                 const string staffRuby = "社員名フリガナ";
                 /// <summary>Label for department code input</summary>
-                const string deparmentCode = "部署コード";
+                const string departmentCodeLabel = "部署コード";
                 /// <summary>The staff number being added</summary>
                 int number;
                 /// <summary>The staff name being added</summary>
@@ -707,7 +707,7 @@ namespace StaffManager
                 /// <summary>The staff ruby being added</summary>
                 string ruby = "";
                 /// <summary>The department code being added</summary>
-                int departmentCode;
+                int departmentCodeValue;
 
                 /// <summary>Gets the command mode (repeatable)</summary>
                 public override CommandMode Mode => CommandMode.Repeat;
@@ -764,7 +764,7 @@ namespace StaffManager
                     var newCode = GetDepartmentCode(company);
                     if (newCode is null)
                         return false;
-                    departmentCode = newCode.Value;
+                    departmentCodeValue = newCode.Value;
                     return true;
                 }
 
@@ -773,9 +773,9 @@ namespace StaffManager
                 /// <returns>True if department was added</returns>
                 public bool Confirm(Company company)
                 {
-                    var deparment = company.DepartmentList.FirstOrDefault(department => department.Code == departmentCode);
+                    var deparment = company.DepartmentList.FirstOrDefault(department => department.Code == departmentCodeValue);
                     if (deparment is null)
-                        throw new Exception();
+                        throw new InvalidOperationException("Department not found");
 
                     var staff = new Staff(Number: number, Name: name, Ruby: ruby, Department: deparment);
                     var confirmBox = new ConfirmBox { Title = Title };
@@ -832,9 +832,9 @@ namespace StaffManager
                 static int? GetDepartmentCode(Company company)
                 {
                     var result = UserInterface.Get<int>(
-                        $"{deparmentCode}を入力してください",
+                        $"{departmentCodeLabel}を入力してください",
                         [(rule: code => company.DepartmentList.Any(department => department.Code == code),
-                          errorMessage: $"その {deparmentCode} は存在しません")]
+                          errorMessage: $"その {departmentCodeLabel} は存在しません")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -844,7 +844,7 @@ namespace StaffManager
             class AddDepartmentCommand : Command<Company>
             {
                 /// <summary>Label for department code input</summary>
-                const string deparmentCode = "部署コード";
+                const string departmentCode = "部署コード";
                 /// <summary>Label for department name input</summary>
                 const string deparmentName = "部署名";
                 /// <summary>The department code being added</summary>
@@ -907,11 +907,11 @@ namespace StaffManager
                 static int? GetCode(Company company)
                 {
                     var result = UserInterface.Get<int>(
-                        $"{deparmentCode}を入力してください",
+                        $"{departmentCode}を入力してください",
                         [(rule: code => Department.MinimumCode <= code && code <= Department.MaximumCode,
-                          errorMessage: $"{deparmentCode}は{Department.MinimumCode}～{Department.MaximumCode}で入力してください"),
+                          errorMessage: $"{departmentCode}は{Department.MinimumCode}～{Department.MaximumCode}で入力してください"),
                          (rule: code => company.DepartmentList.All(department => department.Code != code),
-                          errorMessage: $"その {deparmentCode} はすでに使われています")]
+                          errorMessage: $"その {departmentCode} はすでに使われています")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -1015,7 +1015,6 @@ namespace StaffManager
             bool Load()
             {
                 try {
-                    /// <summary>The company data model</summary>
                     company = Company.Load(dataFilePath);
                     return true;
                 } catch (Exception ex) {
