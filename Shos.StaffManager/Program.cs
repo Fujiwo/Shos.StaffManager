@@ -507,32 +507,31 @@
                 public StaffList StaffList { get; private set; } = new();
 
                 /// <summary>Gets or sets the serializable department list for JSON operations</summary>
-                public Department[] SerializableDepartmentList
+                [JsonInclude]
+                Department[] SerializableDepartmentList
                 {
                     get => DepartmentList.ToArray();
                     set => DepartmentList = [.. value];
                 }
 
                 /// <summary>Gets or sets the serializable staff list for JSON operations</summary>
-                public IEnumerable<SerializableStaff> SerializableStaffList
+                [JsonInclude]
+                IEnumerable<SerializableStaff> SerializableStaffList
                 {
                     get => StaffList.Select(staff => SerializableStaff.From(staff));
                     set => StaffList = [.. value.Select(serializableStaff => serializableStaff.To(DepartmentList))];
                 }
+
+                /// <summary>Initializes a new instance of the Company class</summary>
+                public Company()
+                {}
 
                 /// <summary>Initializes a new instance of the Company class for JSON deserialization</summary>
                 /// <param name="departmentList">The department list</param>
                 /// <param name="staffList">The staff list</param>
                 [JsonConstructor]
                 public Company(DepartmentList departmentList, StaffList staffList)
-                {
-                    DepartmentList = departmentList;
-                    StaffList = staffList;
-                }
-
-                /// <summary>Initializes a new instance of the Company class</summary>
-                public Company()
-                { }
+                    => (DepartmentList, StaffList) = (departmentList, staffList);
 
                 /// <summary>Saves the company data to a JSON file</summary>
                 /// <param name="filePath">The path to save the file</param>
