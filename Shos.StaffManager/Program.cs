@@ -219,6 +219,8 @@
             /// <summary>Base class for window-like UI components</summary>
             class Window
             {
+                public static char separatorCharacter { get; set; } = '-';
+
                 /// <summary>Gets or sets the title of the window</summary>
                 public required string Title { protected get; set; }
 
@@ -235,7 +237,7 @@
                 /// <summary>Displays a separator line</summary>
                 /// <param name="separatorLength">The length of the separator</param>
                 protected static void ShowSeparator(int separatorLength)
-                    => UserInterface.ShowSeparator(separatorCharacter: '-', separatorLength);
+                    => UserInterface.ShowSeparator(separatorCharacter: separatorCharacter, separatorLength);
 
             }
 
@@ -386,7 +388,7 @@
                 /// <summary>Initializes a new instance of the SerializeException class</summary>
                 /// <param name="message">The error message</param>
                 public SerializeException(string message) : base(message)
-                { }
+                {}
             }
 
             /// <summary>Represents a department with code and name</summary>
@@ -395,13 +397,13 @@
             record Department(int Code, string Name)
             {
                 /// <summary>Minimum allowed department code</summary>
-                public const int MinimumCode = 100;
+                public const int MinimumCode       = 100;
                 /// <summary>Maximum allowed department code</summary>
-                public const int MaximumCode = 999;
+                public const int MaximumCode       = 999;
                 /// <summary>Minimum allowed name length</summary>
-                public const int MinimumNameLength = 1;
+                public const int MinimumNameLength =   1;
                 /// <summary>Maximum allowed name length</summary>
-                public const int MaximumNameLength = 30;
+                public const int MaximumNameLength =  30;
             }
 
             /// <summary>Represents a staff member with number, name, ruby reading, and department</summary>
@@ -412,13 +414,13 @@
             record Staff(int Number, string Name, string Ruby, Department Department)
             {
                 /// <summary>Minimum allowed staff number</summary>
-                public const int MinimumNumber = 1;
+                public const int MinimumNumber     =    1;
                 /// <summary>Maximum allowed staff number</summary>
-                public const int MaximumNumber = 9999;
+                public const int MaximumNumber     = 9999;
                 /// <summary>Minimum allowed name length</summary>
-                public const int MinimumNameLength = 1;
+                public const int MinimumNameLength =    1;
                 /// <summary>Maximum allowed name length</summary>
-                public const int MaximumNameLength = 30;
+                public const int MaximumNameLength =   30;
             }
 
             /// <summary>Serializable version of Staff record that stores department as code instead of object</summary>
@@ -739,7 +741,6 @@
                         return false;
                     name = newName;
                     return true;
-
                 }
 
                 /// <summary>Sets the department name from user input</summary>
