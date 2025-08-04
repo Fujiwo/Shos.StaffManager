@@ -9,16 +9,16 @@
             using System.Text;
             using System.Text.RegularExpressions;
 
-            // Note: EnumerableExtensions.ForEach method commented out as it's not used in this application
-            // This would provide a ForEach extension method for IEnumerable collections
-            //public static class EnumerableExtensions
-            //{
-            //    public static void ForEach<TElement>(this IEnumerable<TElement> @this, Action<TElement> action)
-            //    {
-            //        foreach (TElement item in @this)
-            //            action(item);
-            //    }
-            //}
+            /// <summary>Extension methods for IEnumerable</summary>
+            public static class EnumerableExtensions
+            {
+                // This would provide a ForEach extension method for IEnumerable collections
+                public static void ForEach<TElement>(this IEnumerable<TElement> @this, Action<TElement> action)
+                {
+                    foreach (TElement item in @this)
+                        action(item);
+                }
+            }
 
             /// <summary>Extension methods for string operations</summary>
             public static class StringExtensions
@@ -342,24 +342,36 @@
                 const char separatorCharacter = '-';
 
                 /// <summary>Gets or sets the command table mapping mnemonics to commands</summary>
-                public required Dictionary<char, Command<TModel>> CommandTable { private get; set; }
+                Dictionary<char, Command<TModel>> commandTable = null!;
+                IEnumerable<(char mnemonic, Command<TModel> command)> commands = null!;
+
+                /// <summary>Gets or sets the mnemonics and commands</summary>
+                public required IEnumerable<(char mnemonic, Command<TModel> command)> Commands
+                {
+                    private get => commands;
+                    set {
+                        commands = value;
+                        commandTable = new();
+                        value.ForEach(pair => commandTable[pair.mnemonic] = pair.command);
+                    }
+                }
 
                 /// <summary>Displays the menu and allows user to select a command</summary>
                 /// <param name="message">The message to display for selection</param>
                 /// <returns>The selected command or null if cancelled</returns>
                 public Command<TModel>? Select(string message)
                 {
-                    var mnemonics       = new string(CommandTable.Select(pair => pair.Key).ToArray());
+                    var mnemonics       = new string(Commands.Select(pair => pair.mnemonic).ToArray());
                     var menuItemsString = MenuItemsToString();
                     var separator       = Separator(menuItemsString);
                     var result          = UserInterface.GetMnemonic($"{separator}\n{menuItemsString}\n{separator}\n{message}", mnemonics);
-                    return result.isAvailable ? CommandTable[result.mnemonic] : null;
+                    return result.isAvailable ? commandTable[result.mnemonic] : null;
                 }
 
                 /// <summary>Converts menu items to a display string</summary>
                 /// <returns>A formatted string of menu items</returns>
                 string MenuItemsToString()
-                    => string.Join(", ", CommandTable.Select(pair => $"({pair.Key}){pair.Value.Title}").ToArray());
+                    => string.Join(", ", Commands.Select(pair => $"({pair.mnemonic}){pair.command.Title}").ToArray());
                 
                 /// <summary>Creates a separator string based on menu items width</summary>
                 /// <param name="menuItemsString">The menu items string to measure</param>
@@ -982,13 +994,13 @@
                 public CommandManager()
                 {
                     menu = new() {
-                        CommandTable = new Dictionary<char, Command<Company>>() {
-                            { 's', new ShowStaffsCommand     () },
-                            { 'f', new SearchStaffsCommand   () },
-                            { 'a', new AddStaffCommand       () },
-                            { 'd', new ShowDepartmentsCommand() },
-                            { 'e', new AddDepartmentCommand  () },
-                            { 'x', new ExitCommand           () }
+                        Commands = new List<(char, Command<Company>)> {
+                            ( 's', new ShowStaffsCommand     () ),
+                            ( 'f', new SearchStaffsCommand   () ),
+                            ( 'a', new AddStaffCommand       () ),
+                            ( 'd', new ShowDepartmentsCommand() ),
+                            ( 'e', new AddDepartmentCommand  () ),
+                            ( 'x', new ExitCommand           () )
                        }
                     };
                 }
