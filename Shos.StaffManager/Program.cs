@@ -845,7 +845,7 @@
         class Program
         {
             /// <summary>The file path for saving/loading company data</summary>
-            const string dataFilePath = "FC.StaffManager.json";
+            const string dataFilePath = @"C:\work\FC.StaffManager.json";
             /// <summary>The name of the application</summary>
             const string applicationName = "FC.StaffManager";
 
