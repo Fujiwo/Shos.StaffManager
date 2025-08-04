@@ -10,20 +10,12 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Shos.Console" Version="1.1.5" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.7" />
+    <PackageReference Include="ModelContextProtocol" Version="0.3.0-preview.3" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Shos.StaffManager.Models\Shos.StaffManager.Models.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Update="Data\FC.StaffManager.json">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="Data\macro.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
 
 </Project>
