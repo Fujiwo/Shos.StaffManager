@@ -37,9 +37,9 @@
                 /// <summary>Determines if a string contains full-width (Zenkaku) characters</summary>
                 /// <param name="this">The string to check</param>
                 /// <returns>True if the string contains full-width characters</returns>
-                public static bool IsZenkaku(this string @this) => 
-                    // Regex pattern matches any character NOT in the range of ASCII (x01-x7E) or half-width katakana (ｦ-ﾟ)
-                    Regex.IsMatch(@this, "[^\x01-\x7Eｦ-ﾟ]");
+                public static bool IsZenkaku(this string @this)
+                     // Regex pattern matches any character NOT in the range of ASCII (x01-x7E) or half-width katakana (ｦ-ﾟ)
+                     => Regex.IsMatch(@this, "[^\x01-\x7Eｦ-ﾟ]");
             }
 
             /// <summary>Generic type parser utility for converting strings to various types</summary>
@@ -611,7 +611,9 @@
             using Common.ControllersBase;
             using Common.Helpers;
             using Models;
+            using System.Xml.Linq;
             using Views;
+            using static System.Runtime.InteropServices.JavaScript.JSType;
 
             /// <summary>Command to display all staff members</summary>
             class ShowStaffsCommand : SingleStepCommand<Company>
@@ -693,22 +695,40 @@
             /// <summary>Command to add a new staff to the company</summary>
             class AddStaffCommand : Command<Company>
             {
-                /// <summary>Label for staff number input</summary>
-                const string staffNumber = "社員番号";
-                /// <summary>Label for department name input</summary>
-                const string staffName = "社員名";
-                /// <summary>Label for department name input</summary>
-                const string staffRuby = "社員名フリガナ";
-                /// <summary>Label for department code input</summary>
-                const string departmentCodeLabel = "部署コード";
-                /// <summary>The staff number being added</summary>
-                int number;
-                /// <summary>The staff name being added</summary>
-                string name = "";
-                /// <summary>The staff ruby being added</summary>
-                string ruby = "";
-                /// <summary>The department code being added</summary>
-                int departmentCodeValue;
+                static class Label
+                {
+                    /// <summary>Label for staff number input</summary>
+                    public const string Number         = "社員番号";
+                    /// <summary>Label for department name input</summary>
+                    public const string Name           = "社員名";
+                    /// <summary>Label for department name input</summary>
+                    public const string Ruby           = "社員名フリガナ";
+                    /// <summary>Label for department code input</summary>
+                    public const string DepartmentCode = "部署コード";
+                }
+
+                class Input
+                {
+                    /// <summary>The staff number being added</summary>
+                    public int    Number         { get; set; }
+                    /// <summary>The staff name being added</summary>
+                    public string Name           { get; set; } = "";
+                    /// <summary>The staff ruby being added</summary>
+                    public string Ruby           { get; set; } = "";
+                    /// <summary>The department code being added</summary>
+                    public int    DepartmentCode { get; set; }
+
+                    public Staff ToStaff(Company company)
+                    {
+                        var deparment = company.DepartmentList.FirstOrDefault(department => department.Code == DepartmentCode);
+                        if (deparment is null)
+                            throw new InvalidOperationException("Department not found");
+
+                        return new Staff(Number: Number, Name: Name, Ruby: Ruby, Department: deparment);
+                    }
+                }
+
+                Input input = new();
 
                 /// <summary>Gets the command mode (repeatable)</summary>
                 public override CommandMode Mode => CommandMode.Repeat;
@@ -727,7 +747,7 @@
                     var newCode = GetNumber(company);
                     if (newCode is null)
                         return false;
-                    number = newCode.Value;
+                    input.Number = newCode.Value;
                     return true;
                 }
 
@@ -739,7 +759,7 @@
                     var newName = GetName();
                     if (newName is null)
                         return false;
-                    name = newName;
+                    input.Name = newName;
                     return true;
                 }
 
@@ -751,7 +771,7 @@
                     var newRuby = GetRuby();
                     if (newRuby is null)
                         return false;
-                    ruby = newRuby;
+                    input.Ruby = newRuby;
                     return true;
 
                 }
@@ -764,7 +784,7 @@
                     var newCode = GetDepartmentCode(company);
                     if (newCode is null)
                         return false;
-                    departmentCodeValue = newCode.Value;
+                    input.DepartmentCode = newCode.Value;
                     return true;
                 }
 
@@ -773,11 +793,7 @@
                 /// <returns>True if department was added</returns>
                 public bool Confirm(Company company)
                 {
-                    var deparment = company.DepartmentList.FirstOrDefault(department => department.Code == departmentCodeValue);
-                    if (deparment is null)
-                        throw new InvalidOperationException("Department not found");
-
-                    var staff = new Staff(Number: number, Name: name, Ruby: ruby, Department: deparment);
+                    var staff = input.ToStaff(company);
                     var confirmBox = new ConfirmBox { Title = Title };
 
                     if (confirmBox.Show(text: $"社員番号\t: {staff.Number}\n氏名\t: {staff.Name}({staff.Ruby})\n部署\t:{staff.Department.Name}({staff.Department.Code})", message: "この社員を追加しますか?")) {
@@ -793,11 +809,11 @@
                 static int? GetNumber(Company company)
                 {
                     var result = UserInterface.Get<int>(
-                        $"{staffNumber}を入力してください",
+                        $"{Label.Number}を入力してください",
                         [(rule: number => Staff.MinimumNumber <= number && number <= Staff.MaximumNumber,
-                          errorMessage: $"{staffNumber}は{Staff.MinimumNumber}～{Staff.MaximumNumber}で入力してください"),
+                          errorMessage: $"{Label.Number}は{Staff.MinimumNumber}～{Staff.MaximumNumber}で入力してください"),
                          (rule: number => company.StaffList.All(staff => staff.Number != number),
-                          errorMessage: $"その {staffNumber} はすでに使われています")]
+                          errorMessage: $"その {Label.Number} はすでに使われています")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -807,9 +823,9 @@
                 static string? GetName()
                 {
                     var result = UserInterface.Get<string>(
-                        message: $"{staffName}を入力してください",
+                        message: $"{Label.Name}を入力してください",
                         [(rule: text => Staff.MinimumNameLength <= text.Length && text.Length <= Staff.MaximumNameLength,
-                          errorMessage: $"{staffName}は{Staff.MinimumNameLength}文字～{Staff.MaximumNameLength}文字で入力してください")]
+                          errorMessage: $"{Label.Name}は{Staff.MinimumNameLength}文字～{Staff.MaximumNameLength}文字で入力してください")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -819,9 +835,9 @@
                 static string? GetRuby()
                 {
                     var result = UserInterface.Get<string>(
-                        message: $"{staffRuby}を入力してください",
+                        message: $"{Label.Ruby}を入力してください",
                         [(rule: text => Staff.MinimumNameLength <= text.Length && text.Length <= Staff.MaximumNameLength,
-                          errorMessage: $"{staffRuby}は{Staff.MinimumNameLength}文字～{Staff.MaximumNameLength}文字で入力してください")]
+                          errorMessage: $"{Label.Ruby}は{Staff.MinimumNameLength}文字～{Staff.MaximumNameLength}文字で入力してください")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -832,9 +848,9 @@
                 static int? GetDepartmentCode(Company company)
                 {
                     var result = UserInterface.Get<int>(
-                        $"{departmentCodeLabel}を入力してください",
+                        $"{Label.DepartmentCode}を入力してください",
                         [(rule: code => company.DepartmentList.Any(department => department.Code == code),
-                          errorMessage: $"その {departmentCodeLabel} は存在しません")]
+                          errorMessage: $"その {Label.DepartmentCode} は存在しません")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -843,14 +859,26 @@
             /// <summary>Command to add a new department to the company</summary>
             class AddDepartmentCommand : Command<Company>
             {
-                /// <summary>Label for department code input</summary>
-                const string departmentCode = "部署コード";
-                /// <summary>Label for department name input</summary>
-                const string deparmentName = "部署名";
-                /// <summary>The department code being added</summary>
-                int code;
-                /// <summary>The department name being added</summary>
-                string name = "";
+                static class Label
+                {
+                    /// <summary>Label for department code input</summary>
+                    public const string Code = "部署コード";
+                    /// <summary>Label for department name input</summary>
+                    public const string Name = "部署名";
+                }
+
+                class Input
+                {
+                    /// <summary>The department code being added</summary>
+                    public int    Code { get; set; }
+                    /// <summary>The department name being added</summary>
+                    public string Name { get; set; } = "";
+
+                    public Department ToDepartment()
+                        => new Department(Code: Code, Name: Name);
+                }
+
+                Input input = new();
 
                 /// <summary>Gets the command mode (repeatable)</summary>
                 public override CommandMode Mode => CommandMode.Repeat;
@@ -869,7 +897,7 @@
                     var newCode = GetCode(company);
                     if (newCode is null)
                         return false;
-                    code = newCode.Value;
+                    input.Code = newCode.Value;
                     return true;
                 }
 
@@ -881,7 +909,7 @@
                     var newName = GetName();
                     if (newName is null)
                         return false;
-                    name = newName;
+                    input.Name = newName;
                     return true;
 
                 }
@@ -891,7 +919,7 @@
                 /// <returns>True if department was added</returns>
                 public bool Confirm(Company company)
                 {
-                    var department = new Department(Code: code, Name: name);
+                    var department = input.ToDepartment();
                     var confirmBox = new ConfirmBox { Title = Title };
 
                     if (confirmBox.Show(text: $"部署コード\t: {department.Code}\n部署名\t:{department.Name}", message: "この部署を追加しますか?")) {
@@ -907,11 +935,11 @@
                 static int? GetCode(Company company)
                 {
                     var result = UserInterface.Get<int>(
-                        $"{departmentCode}を入力してください",
+                        $"{Label.Code}を入力してください",
                         [(rule: code => Department.MinimumCode <= code && code <= Department.MaximumCode,
-                          errorMessage: $"{departmentCode}は{Department.MinimumCode}～{Department.MaximumCode}で入力してください"),
+                          errorMessage: $"{Label.Code}は{Department.MinimumCode}～{Department.MaximumCode}で入力してください"),
                          (rule: code => company.DepartmentList.All(department => department.Code != code),
-                          errorMessage: $"その {departmentCode} はすでに使われています")]
+                          errorMessage: $"その {Label.Code} はすでに使われています")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
@@ -921,9 +949,9 @@
                 static string? GetName()
                 {
                     var result = UserInterface.Get<string>(
-                        message: $"{deparmentName}を入力してください",
+                        message: $"{Label.Name}を入力してください",
                         [(rule: text => Department.MinimumNameLength <= text.Length && text.Length <= Department.MaximumNameLength,
-                          errorMessage: $"{deparmentName}は{Department.MinimumNameLength}文字～{Department.MaximumNameLength}文字で入力してください")]
+                          errorMessage: $"{Label.Name}は{Department.MinimumNameLength}文字～{Department.MaximumNameLength}文字で入力してください")]
                     );
                     return result.isAvailable ? result.item : null;
                 }
