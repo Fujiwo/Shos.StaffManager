@@ -994,14 +994,14 @@
                 public CommandManager()
                 {
                     menu = new() {
-                        Commands = new List<(char, Command<Company>)> {
-                            ( 's', new ShowStaffsCommand     () ),
-                            ( 'f', new SearchStaffsCommand   () ),
-                            ( 'a', new AddStaffCommand       () ),
-                            ( 'd', new ShowDepartmentsCommand() ),
-                            ( 'e', new AddDepartmentCommand  () ),
-                            ( 'x', new ExitCommand           () )
-                       }
+                        Commands = [
+                            ('s', new ShowStaffsCommand     ()),
+                            ('f', new SearchStaffsCommand   ()),
+                            ('a', new AddStaffCommand       ()),
+                            ('d', new ShowDepartmentsCommand()),
+                            ('e', new AddDepartmentCommand  ()),
+                            ('x', new ExitCommand           ())
+                        ]
                     };
                 }
 
