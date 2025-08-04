@@ -1,6 +1,6 @@
 # Shos.StaffManager
 
-A console-based staff management system built with .NET 8.0 and C#. This application provides an interactive command-line interface for managing staff members and departments with Japanese language support.
+A console-based staff management system built with .NET 9.0 and C#. This application provides an interactive command-line interface for managing staff members and departments with Japanese language support.
 
 ## Learning Value for Programming Students
 
@@ -146,7 +146,7 @@ Shos.StaffManager/
 
 ## Requirements
 
-- **.NET 8.0** or later
+- **.NET 9.0** or later
 - **Shos.Console 1.1.5** (automatically installed via NuGet)
 
 ## Installation & Setup
@@ -174,32 +174,32 @@ The application presents a Japanese menu with the following options:
 
 - **(s) 社員一覧** - List all staff members
 - **(f) 社員検索** - Search for staff members  
-- **(a) 社員追加** - Add new staff member
+- **(a) 社員追加** - Add a new staff member
 - **(d) 部署一覧** - List all departments
-- **(e) 部署追加** - Add new department
-- **(x) 終了** - Exit application
+- **(e) 部署追加** - Add a new department
+- **(x) 終了** - Exit the application
 
 ### Sample Operations
 
 #### Adding a Department
-1. Select **(e) 部署追加** from main menu
-2. Enter department code (100-999)
-3. Enter department name (1-30 characters)
+1. Select **(e) 部署追加** from the main menu
+2. Enter a department code (100-999)
+3. Enter a department name (1-30 characters)
 4. Confirm the addition
 
 #### Adding a Staff Member
-1. Select **(a) 社員追加** from main menu  
-2. Enter staff number (1-9999)
-3. Enter staff name (1-30 characters)
-4. Enter phonetic reading (ruby)
-5. Enter existing department code
+1. Select **(a) 社員追加** from the main menu  
+2. Enter a staff number (1-9999)
+3. Enter a staff name (1-30 characters)
+4. Enter the phonetic reading (ruby)
+5. Enter an existing department code
 6. Confirm the addition
 
-#### Searching Staff
-1. Select **(f) 社員検索** from main menu
-2. Enter search term (name, number, or department)
-3. View filtered results
-4. Repeat search or return to main menu
+#### Searching for Staff
+1. Select **(f) 社員検索** from the main menu
+2. Enter a search term (name, number, or department)
+3. View the filtered results
+4. Repeat the search or return to the main menu
 
 ## Data Storage
 
@@ -226,11 +226,11 @@ Data is stored in `FC.StaffManager.json` using UTF-8 encoding with pretty-printe
 ```
 
 ### Data Migration
-The application automatically creates a new data file if none exists. Sample data is included in the `Data/` directory.
+The application automatically creates a new data file if none exists. Sample data is included in the `Data/` directory for testing purposes.
 
 ## Key Technologies
 
-- **.NET 8.0**: Modern C# with latest language features
+- **.NET 9.0**: Modern C# with latest language features
 - **System.Text.Json**: High-performance JSON serialization
 - **Shos.Console**: Enhanced console table formatting
 - **Records**: Immutable data structures with validation
@@ -252,18 +252,18 @@ The application automatically creates a new data file if none exists. Sample dat
 - Separation of concerns enables unit testing
 
 ### Performance
-- In-memory data operations
-- Efficient JSON serialization
-- Lazy loading of data
-- Optimized string width calculations for Japanese text
+- In-memory data operations for fast access
+- Efficient JSON serialization and deserialization
+- Lazy loading of data when needed
+- Optimized string width calculations for Japanese text display
 
 ## Contributing
 
-This project uses standard .NET development practices:
-- Follow existing code style and patterns
-- Add unit tests for new features
+This project follows standard .NET development practices:
+- Follow the existing code style and patterns
+- Add unit tests for any new features
 - Ensure Japanese character support is maintained
-- Update documentation for API changes
+- Update documentation for any API changes
 
 ## License
 
