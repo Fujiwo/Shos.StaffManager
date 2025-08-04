@@ -87,6 +87,17 @@ namespace Shos.StaffManager.Models
         /// <param name="department">The department to add</param>
         public void Add(Department department) => departments.Add(department);
 
+        /// <summary>Remove a department from the list</summary>
+        /// <param name="code">The code of department to remove</param>
+        public bool Remove(int code)
+        {
+            var foundDepartment = departments.FirstOrDefault(department => department.Code == code);
+            if (foundDepartment is null)
+                return false;
+            departments.Remove(foundDepartment);
+            return true;
+        }
+
         /// <summary>Returns an enumerator for the departments</summary>
         /// <returns>An enumerator for Department objects</returns>
         public IEnumerator<Department> GetEnumerator() => departments.GetEnumerator();
@@ -105,6 +116,17 @@ namespace Shos.StaffManager.Models
         /// <summary>Adds a staff member to the list</summary>
         /// <param name="staff">The staff member to add</param>
         public void Add(Staff staff) => staffs.Add(staff);
+
+        /// <summary>Remove a staff from the list</summary>
+        /// <param name="number">The number of staff to remove</param>
+        public bool Remove(int number)
+        {
+            var foundStaff = staffs.FirstOrDefault(staff => staff.Number == number);
+            if (foundStaff is null)
+                return false;
+            staffs.Remove(foundStaff);
+            return true;
+        }
 
         /// <summary>Returns an enumerator for the staff members</summary>
         /// <returns>An enumerator for Staff objects</returns>
@@ -157,6 +179,25 @@ namespace Shos.StaffManager.Models
         [JsonConstructor]
         public Company(DepartmentList departmentList, StaffList staffList)
             => (DepartmentList, StaffList) = (departmentList, staffList);
+
+        /// <summary>Departments filtered by search text</summary>
+        /// <param name="searchText">The text to search for in names or codes</param>
+        public IEnumerable<Department> GetDepartments(string searchText = "")
+            => DepartmentList.Where(department => department.Name.Contains(searchText) ||
+                                                  department.Code.ToString().Equals(searchText));
+
+        /// <summary>Staff members filtered by search text</summary>
+        /// <param name="searchText">The text to search for in names, numbers, or departments</param>
+        public IEnumerable<Staff> GetStaffs(string searchText = "")
+            => StaffList.Where(staff => staff.Name.Contains(searchText)            ||
+                                        staff.Number.ToString().Equals(searchText) ||
+                                        staff.Department.Name.Contains(searchText));
+
+        /// <summary>Remove a department</summary>
+        /// <param name="code">The code of department to remove</param>
+        public bool RemoveDepartment(int departmentCode)
+            => StaffList.Any(staff => staff.Department.Code == departmentCode)
+               ? false : DepartmentList.Remove(departmentCode);
 
         /// <summary>Saves the company data to a JSON file</summary>
         /// <param name="filePath">The path to save the file</param>

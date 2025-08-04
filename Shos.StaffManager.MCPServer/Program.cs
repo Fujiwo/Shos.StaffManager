@@ -22,8 +22,8 @@ public static class StaffManagerTools
     [McpServerTool, Description("全部署の情報を取得")]
     public static Department[] GetAllDepartments() => company.DepartmentList.ToArray();
 
-    [McpServerTool, Description("全社員の情報を取得")]
-    public static Staff[] GetAllStaffs() => company.StaffList.ToArray();
+    [McpServerTool, Description("キーワードにヒットする部署の情報を取得")]
+    public static Department[] SearchDepartments(string searchText) => company.GetDepartments(searchText: searchText).ToArray();
 
     [McpServerTool, Description("新たな部署の情報を追加")]
     public static bool AddNewDeparment(Department newDepartment)
@@ -37,6 +37,25 @@ public static class StaffManagerTools
         }
     }
 
+    [McpServerTool, Description("部署コードに該当する部署の情報を削除")]
+    public static bool RemoveDeparmentWithCode(int departmentCode)
+    {
+        try {
+            if (company.RemoveDepartment(departmentCode)) {
+                company.Save(dataFilePath);
+                return true;
+            }
+        } catch {
+        }
+        return false;
+    }
+
+    [McpServerTool, Description("全社員の情報を取得")]
+    public static Staff[] GetAllStaffs() => company.StaffList.ToArray();
+
+    [McpServerTool, Description("キーワードにヒットする社員の情報を取得")]
+    public static Staff[] SearchStaffs(string searchText) => company.GetStaffs(searchText: searchText).ToArray();
+
     [McpServerTool, Description("新たな社員の情報を追加")]
     public static bool AddNewStaff(Staff newStaff)
     {
@@ -47,6 +66,19 @@ public static class StaffManagerTools
         } catch {
             return false;
         }
+    }
+
+    [McpServerTool, Description("番号に該当する社員の情報を削除")]
+    public static bool RemoveStaffWithNumbere(int number)
+    {
+        try {
+            if (company.StaffList.Remove(number)) {
+                company.Save(dataFilePath);
+                return true;
+            }
+        } catch {
+        }
+        return false;
     }
 
     static void Save() =>company.Save(dataFilePath);

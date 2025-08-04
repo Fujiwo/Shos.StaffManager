@@ -430,9 +430,7 @@
                 /// <param name="company">The company model</param>
                 /// <param name="searchText">The text to search for in names, numbers, or departments</param>
                 public static void ShowStaffs(Company company, string searchText)
-                    => Show(company.StaffList.Where(staff => staff.Name.Contains(searchText) ||
-                                                             staff.Number.ToString().Equals(searchText) ||
-                                                             staff.Department.Name.Contains(searchText)));
+                    => Show(company.GetStaffs(searchText));
             }
         }
 
