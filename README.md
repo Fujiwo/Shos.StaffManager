@@ -69,6 +69,8 @@ This sample application serves as an excellent educational resource for develope
 - Advanced type system features
 - Architectural patterns
 - Performance optimization techniques
+- **AI Integration**: Model Context Protocol (MCP) server development
+- **Tool Design**: Creating AI-accessible tools and APIs
 
 ### 📚 **Educational Exercises**
 
@@ -80,6 +82,9 @@ Students can enhance their learning by:
 5. **Localization**: Add support for multiple languages
 6. **Performance**: Implement caching and async operations
 7. **UI enhancement**: Add color coding, progress bars, or menu shortcuts
+8. **MCP expansion**: Add new MCP tools for reporting and analytics
+9. **AI integration**: Experiment with different AI assistants using the MCP server
+10. **Protocol development**: Create custom MCP tools for specialized workflows
 
 This codebase provides a realistic, well-structured example that bridges the gap between simple tutorials and complex enterprise applications, making it an ideal learning resource for developers at various skill levels.
 
@@ -91,6 +96,7 @@ This codebase provides a realistic, well-structured example that bridges the gap
 - **Search Capabilities**: Find staff by name, employee number, or department
 - **Data Persistence**: Automatic JSON file storage with UTF-8 encoding
 - **Japanese Support**: Full support for Japanese characters with proper display width calculation
+- **MCP Integration**: Model Context Protocol server for AI assistant integration
 
 ### User Interface
 - Interactive console menu system
@@ -98,6 +104,11 @@ This codebase provides a realistic, well-structured example that bridges the gap
 - Input validation with error messages
 - Confirmation dialogs for data entry operations
 - Repeatable commands for bulk operations
+
+### AI Assistant Integration
+- **MCP Server**: Exposes staff management functionality through Model Context Protocol
+- **Tool-based Access**: AI assistants can directly manage staff and departments
+- **Real-time Operations**: Add, remove, search, and list operations available via MCP tools
 
 ## Technical Architecture
 
@@ -109,21 +120,26 @@ This codebase provides a realistic, well-structured example that bridges the gap
 ### Project Structure
 ```
 Shos.StaffManager/
-├── Models/
-│   ├── Staff.cs              # Staff record with validation
-│   ├── Department.cs         # Department record  
-│   ├── Company.cs            # Main data container
-│   └── SerializableStaff.cs  # JSON serialization support
-├── Views/
-│   └── View.cs               # Data display formatting
-├── Controllers/
-│   ├── Commands/             # Menu command implementations
-│   └── CommandManager.cs     # Command orchestration
-├── Common/
-│   ├── Helpers/              # Utility classes
-│   └── ControllersBase/      # Base UI components
-└── Data/
-    └── FC.StaffManager.json  # Sample data file
+├── Shos.StaffManager/          # Main console application
+│   ├── Models/
+│   │   ├── Staff.cs              # Staff record with validation
+│   │   ├── Department.cs         # Department record  
+│   │   ├── Company.cs            # Main data container
+│   │   └── SerializableStaff.cs  # JSON serialization support
+│   ├── Views/
+│   │   └── View.cs               # Data display formatting
+│   ├── Controllers/
+│   │   ├── Commands/             # Menu command implementations
+│   │   └── CommandManager.cs     # Command orchestration
+│   ├── Common/
+│   │   ├── Helpers/              # Utility classes
+│   │   └── ControllersBase/      # Base UI components
+│   └── Data/
+│       └── FC.StaffManager.json  # Sample data file
+├── Shos.StaffManager.Models/   # Shared data models library
+└── Shos.StaffManager.MCPServer/ # MCP server for AI integration
+    ├── Program.cs               # MCP server implementation
+    └── StaffManagerTools.cs     # MCP tool definitions
 ```
 
 ### Data Model
@@ -144,12 +160,107 @@ Shos.StaffManager/
 - Name fields have 1-30 character length limits
 - Department references are validated on staff creation
 
+## Shos.StaffManager.MCPServer
+
+### What is MCP (Model Context Protocol)?
+
+**Model Context Protocol (MCP)** is an open standard that enables secure connections between AI assistants and external data sources and tools. MCP allows AI assistants like Claude, ChatGPT, and others to access and interact with external systems through a standardized protocol, expanding their capabilities beyond their training data.
+
+Key benefits of MCP:
+- **Secure Integration**: Controlled access to external tools and data
+- **Real-time Data**: Access to live, up-to-date information
+- **Tool Execution**: AI assistants can perform actions on external systems
+- **Standardized Protocol**: Consistent interface across different AI platforms
+
+### MCP Server Component
+
+The `Shos.StaffManager.MCPServer` project provides an MCP server that exposes the staff management system's functionality as tools that AI assistants can use. This allows AI assistants to directly interact with the staff management system without requiring manual console operations.
+
+#### Available MCP Tools
+
+The MCP server provides the following tools for AI assistants:
+
+**Department Management:**
+- `GetAllDepartments()` - Retrieve all departments
+- `SearchDepartments(searchText)` - Search departments by keyword
+- `AddNewDeparment(newDepartment)` - Add a new department
+- `RemoveDeparmentWithCode(departmentCode)` - Remove a department by code
+
+**Staff Management:**
+- `GetAllStaffs()` - Retrieve all staff members
+- `SearchStaffs(searchText)` - Search staff by keyword
+- `AddNewStaff(newStaff)` - Add a new staff member
+- `RemoveStaffWithNumbere(number)` - Remove a staff member by number
+
+#### Setting Up the MCP Server
+
+1. **Build the MCP Server**:
+   ```bash
+   dotnet build Shos.StaffManager.MCPServer
+   ```
+
+2. **Run with MCP Inspector** (for testing):
+   ```bash
+   npx @modelcontextprotocol/inspector dotnet run --project ./Shos.StaffManager.MCPServer/Shos.StaffManager.MCPServer.csproj
+   ```
+
+3. **Configure with Claude Desktop**:
+   
+   Edit your `claude_desktop_config.json` file:
+   ```json
+   {
+     "mcpServers": {
+       "StaffManagerTools": {
+         "command": "[path-to-executable]\\Shos.StaffManager.MCPServer.exe"
+       }
+     }
+   }
+   ```
+
+4. **Configure with Visual Studio Code**:
+   
+   Add to your VS Code MCP settings:
+   ```json
+   {
+     "servers": {
+       "MCPServer.Console": {
+         "type": "stdio",
+         "command": "dotnet",
+         "args": [
+           "run",
+           "--project",
+           "C:\\[project-folder]\\Shos.StaffManager.MCPServer.csproj"
+         ]
+       }
+     }
+   }
+   ```
+
+#### Use Cases for AI Integration
+
+With the MCP server running, AI assistants can:
+- **Answer questions** about staff and departments using live data
+- **Generate reports** by querying and analyzing staff information
+- **Perform bulk operations** like adding multiple staff members
+- **Validate data integrity** by checking for duplicates or inconsistencies
+- **Provide interactive assistance** for staff management tasks
+
+This integration transforms the console-based staff management system into a powerful backend service that AI assistants can leverage for intelligent staff management operations.
+
 ## Requirements
 
+### Console Application
 - **.NET 9.0** or later
 - **Shos.Console 1.1.5** (automatically installed via NuGet)
 
+### MCP Server
+- **.NET 9.0** or later
+- **ModelContextProtocol 0.3.0-preview.3** (automatically installed via NuGet)
+- **Microsoft.Extensions.Hosting 9.0.7** (automatically installed via NuGet)
+
 ## Installation & Setup
+
+### Console Application
 
 1. **Clone the repository**:
    ```bash
@@ -162,10 +273,24 @@ Shos.StaffManager/
    dotnet build
    ```
 
-3. **Run the application**:
+3. **Run the console application**:
    ```bash
    dotnet run --project Shos.StaffManager
    ```
+
+### MCP Server Setup
+
+1. **Build the MCP server**:
+   ```bash
+   dotnet build Shos.StaffManager.MCPServer
+   ```
+
+2. **Test with MCP Inspector**:
+   ```bash
+   npx @modelcontextprotocol/inspector dotnet run --project Shos.StaffManager.MCPServer
+   ```
+
+3. **Configure your AI assistant** (see MCP Server section above for detailed configuration)
 
 ## Usage
 
@@ -230,12 +355,18 @@ The application automatically creates a new data file if none exists. Sample dat
 
 ## Key Technologies
 
+### Core Technologies
 - **.NET 9.0**: Modern C# with latest language features
 - **System.Text.Json**: High-performance JSON serialization
 - **Shos.Console**: Enhanced console table formatting
 - **Records**: Immutable data structures with validation
 - **LINQ**: Functional query operations
 - **UTF-8**: Full Unicode support for Japanese text
+
+### MCP Integration
+- **ModelContextProtocol**: Standard protocol for AI assistant tool integration
+- **Microsoft.Extensions.Hosting**: .NET hosting model for the MCP server
+- **Stdio Transport**: Standard input/output communication with AI assistants
 
 ## Development Features
 
