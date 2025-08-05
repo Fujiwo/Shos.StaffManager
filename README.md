@@ -249,6 +249,13 @@ classDiagram
     }
     
     namespace Common.ControllersBase {
+        class CommandMode {
+            <<enumeration>>
+            Exit
+            Once
+            Repeat
+        }
+        
         class Window {
             <<abstract>>
             +string Title
@@ -267,7 +274,6 @@ classDiagram
         
         class Command~TModel~ {
             <<abstract>>
-            +enum CommandMode { Exit, Once, Repeat }
             +virtual CommandMode Mode
             +abstract string Title
             +virtual Func~TModel, bool~[] Steps
@@ -358,6 +364,7 @@ classDiagram
     Window <|-- ConfirmBox
     Window <|-- DialogBox~TModel~
     Command~TModel~ <|-- SingleStepCommand~TModel~
+    Command~TModel~ ..> CommandMode : uses
     SingleStepCommand~Company~ <|-- ShowStaffsCommand
     Command~Company~ <|-- SearchStaffsCommand
     Command~Company~ <|-- AddStaffCommand
