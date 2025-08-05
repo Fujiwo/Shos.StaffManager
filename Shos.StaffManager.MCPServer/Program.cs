@@ -22,14 +22,14 @@ namespace Shos.StaffManager.MCPServer
         const string dataFilePath = @"C:\work\FC.StaffManager.json";
         static Company company = Company.Load(dataFilePath);
 
-        [McpServerTool, Description("全部署の情報を取得")]
+        [McpServerTool, Description("Retrieve all departments")]
         public static Department[] GetAllDepartments() => company.DepartmentList.ToArray();
 
-        [McpServerTool, Description("キーワードにヒットする部署の情報を取得")]
+        [McpServerTool, Description("Search departments by keyword")]
         public static Department[] SearchDepartments(string searchText) => company.GetDepartments(searchText: searchText).ToArray();
 
-        [McpServerTool, Description("新たな部署の情報を追加")]
-        public static bool AddNewDeparment(Department newDepartment)
+        [McpServerTool, Description("Add a new department")]
+        public static bool AddNewDepartment(Department newDepartment)
         {
             try {
                 company.DepartmentList.Add(newDepartment);
@@ -40,8 +40,8 @@ namespace Shos.StaffManager.MCPServer
             }
         }
 
-        [McpServerTool, Description("部署コードに該当する部署の情報を削除")]
-        public static bool RemoveDeparmentWithCode(int departmentCode)
+        [McpServerTool, Description("Remove a department by code")]
+        public static bool RemoveDepartmentWithCode(int departmentCode)
         {
             try {
                 if (company.RemoveDepartment(departmentCode)) {
@@ -53,13 +53,13 @@ namespace Shos.StaffManager.MCPServer
             return false;
         }
 
-        [McpServerTool, Description("全社員の情報を取得")]
+        [McpServerTool, Description("Retrieve all staff members")]
         public static Staff[] GetAllStaffs() => company.StaffList.ToArray();
 
-        [McpServerTool, Description("キーワードにヒットする社員の情報を取得")]
+        [McpServerTool, Description("Search staff by keyword")]
         public static Staff[] SearchStaffs(string searchText) => company.GetStaffs(searchText: searchText).ToArray();
 
-        [McpServerTool, Description("新たな社員の情報を追加")]
+        [McpServerTool, Description("Add a new staff member")]
         public static bool AddNewStaff(Staff newStaff)
         {
             try {
@@ -71,8 +71,8 @@ namespace Shos.StaffManager.MCPServer
             }
         }
 
-        [McpServerTool, Description("番号に該当する社員の情報を削除")]
-        public static bool RemoveStaffWithNumbere(int number)
+        [McpServerTool, Description("Remove a staff member by number")]
+        public static bool RemoveStaffWithNumber(int number)
         {
             try {
                 if (company.StaffList.Remove(number)) {
@@ -91,7 +91,7 @@ namespace Shos.StaffManager.MCPServer
 /*
 npx @modelcontextprotocol/inspector dotnet run --project ./Shos.StaffManager.MCPServer/Shos.StaffManager.MCPServer.csproj
 
-Visual Studio Code - 設定 - MCP - settings.json を編集
+Visual Studio Code - Settings - MCP - Edit "settings.json"
 
 "servers": {
     "MCPServer.Console": {
@@ -100,16 +100,16 @@ Visual Studio Code - 設定 - MCP - settings.json を編集
         "args": [
             "run",
             "--project",
-            "C:\\[プロジェクト フォルダー]\\Shos.StaffManager.MCPServer.csproj"
+            "C:\\[Project Folder]\\Shos.StaffManager.MCPServer.csproj"
         ]
     }
 }
 
-Claude Desktop - ファイル - 設定 - 開発者 - ローカルMCPサーバー - 設定を編集 - claude_desktop_config.json を編集
+Claude Desktop - File - Settings - Developer - Local MCP server - Edit Settings - Edit "claude_desktop_config.json"
 
 "mcpServers": {
     "StaffManagerTools": {
-        "command": "[実行ファイル フォルダー]\\Shos.StaffManager.MCPServer.exe]"
+        "command": "[Executable File Folder]\\Shos.StaffManager.MCPServer.exe]"
     }
 }
  */
