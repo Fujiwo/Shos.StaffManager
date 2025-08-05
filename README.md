@@ -117,6 +117,291 @@ This codebase provides a realistic, well-structured example that bridges the gap
 - **Command Pattern**: Menu operations implemented as commands
 - **Repository Pattern**: JSON-based data persistence layer
 
+### Class Diagrams
+
+#### Shos.StaffManager.Models Project
+
+The models project contains the core domain entities and data structures:
+
+```mermaid
+classDiagram
+    class SerializeException {
+        +SerializeException(string message)
+    }
+    
+    class Department {
+        <<record>>
+        +int Code
+        +string Name
+        +const int MinimumCode = 100
+        +const int MaximumCode = 999
+        +const int MinimumNameLength = 1
+        +const int MaximumNameLength = 30
+    }
+    
+    class Staff {
+        <<record>>
+        +int Number
+        +string Name
+        +string Ruby
+        +Department Department
+        +const int MinimumNumber = 1
+        +const int MaximumNumber = 9999
+        +const int MinimumNameLength = 1
+        +const int MaximumNameLength = 30
+    }
+    
+    class SerializableStaff {
+        <<record>>
+        +int Number
+        +string Name
+        +string Ruby
+        +int DepartmentCode
+        +From(Staff staff)$ SerializableStaff
+        +To(DepartmentList departmentList) Staff
+    }
+    
+    class DepartmentList {
+        -List~Department~ departments
+        +this[int index] Department
+        +Add(Department department) void
+        +Remove(int code) bool
+        +GetEnumerator() IEnumerator~Department~
+    }
+    
+    class StaffList {
+        -List~Staff~ staffs
+        +Add(Staff staff) void
+        +Remove(int number) bool
+        +GetEnumerator() IEnumerator~Staff~
+    }
+    
+    class Company {
+        +string Version
+        +DepartmentList DepartmentList
+        +StaffList StaffList
+        -Department[] SerializableDepartmentList
+        -IEnumerable~SerializableStaff~ SerializableStaffList
+        +GetDepartments(string searchText) IEnumerable~Department~
+        +GetStaffs(string searchText) IEnumerable~Staff~
+        +RemoveDepartment(int departmentCode) bool
+        +Save(string filePath) void
+        +Load(string filePath)$ Company
+    }
+    
+    ApplicationException <|-- SerializeException
+    IEnumerable~Department~ <|.. DepartmentList
+    IEnumerable~Staff~ <|.. StaffList
+    Company *-- DepartmentList
+    Company *-- StaffList
+    DepartmentList o-- Department
+    StaffList o-- Staff
+    Staff *-- Department
+    SerializableStaff ..> Staff : converts to/from
+    SerializableStaff ..> DepartmentList : uses for conversion
+```
+
+#### Shos.StaffManager Console Application
+
+The main console application follows MVC architecture with command pattern:
+
+```mermaid
+classDiagram
+    namespace Common.Helpers {
+        class EnumerableExtensions {
+            <<static>>
+            +ForEach~TElement~(IEnumerable~TElement~ this, Action~TElement~ action)$
+        }
+        
+        class StringExtensions {
+            <<static>>
+            +Width(string this)$ int
+            +IsZenkaku(char this)$ bool
+            +IsZenkaku(string this)$ bool
+        }
+        
+        class TypeParser {
+            <<static>>
+            +Parse~T~(string this)$ T?
+            +TryParse~T~(string this)$ (bool canParse, T? result)
+            +Parse(Type this, string text)$ object?
+            +TryParse(Type this, string text)$ (bool canParse, object? result)
+        }
+        
+        class ConsoleColorSetter {
+            -ConsoleColor oldForeground
+            -ConsoleColor oldBackground
+            +Foreground ConsoleColor
+            +Background ConsoleColor
+            +Dispose() void
+        }
+        
+        class UserInterface {
+            <<static>>
+            +string CancelString
+            +string ErrorHeader
+            +Get~T~(string message, IEnumerable rules)$ (bool isAvailable, T? item)
+            +GetMnemonic(string message, string mnemonics)$ (bool isAvailable, char mnemonic)
+            +ShowPrompt(string message)$ void
+            +ShowError(string message)$ void
+            +Show(string message)$ void
+        }
+    }
+    
+    namespace Common.ControllersBase {
+        class Window {
+            <<abstract>>
+            +string Title
+            #ShowTitleBar(int separatorLength) void
+            #ShowSeparator(int separatorLength)$ void
+        }
+        
+        class ConfirmBox {
+            +Show(string text, string message) bool
+        }
+        
+        class DialogBox~TModel~ {
+            +Func~TModel, bool~[] Steps
+            +Show(TModel model) bool
+        }
+        
+        class Command~TModel~ {
+            <<abstract>>
+            +enum CommandMode { Exit, Once, Repeat }
+            +virtual CommandMode Mode
+            +abstract string Title
+            +virtual Func~TModel, bool~[] Steps
+            +Run(TModel model) bool
+        }
+        
+        class SingleStepCommand~TModel~ {
+            <<abstract>>
+            +Func~TModel, bool~[] Steps
+            #abstract RunFeature(TModel model) bool
+        }
+        
+        class Menu~TModel~ {
+            -Dictionary~char, Command~TModel~~ commandTable
+            +IEnumerable Commands
+            +Select(string message) Command~TModel~?
+        }
+    }
+    
+    namespace Views {
+        class View {
+            <<static>>
+            +Show(IEnumerable~Department~ departments)$ void
+            +Show(IEnumerable~Staff~ staffs)$ void
+            +ShowDepartments(Company company)$ void
+            +ShowStaffs(Company company)$ void
+            +ShowStaffs(Company company, string searchText)$ void
+        }
+    }
+    
+    namespace Controllers {
+        class ShowStaffsCommand {
+            +string Title
+            #RunFeature(Company model) bool
+        }
+        
+        class SearchStaffsCommand {
+            +CommandMode Mode
+            +string Title
+            +Func~Company, bool~[] Steps
+            -string searchString
+        }
+        
+        class AddStaffCommand {
+            +CommandMode Mode
+            +string Title
+            +Func~Company, bool~[] Steps
+            -Input input
+        }
+        
+        class AddDepartmentCommand {
+            +CommandMode Mode
+            +string Title
+            +Func~Company, bool~[] Steps
+            -Input input
+        }
+        
+        class ShowDepartmentsCommand {
+            +string Title
+            #RunFeature(Company model) bool
+        }
+        
+        class ExitCommand {
+            +CommandMode Mode
+            +string Title
+            #RunFeature(Company model) bool
+        }
+        
+        class CommandManager {
+            -Menu~Company~ menu
+            +Run(Company model) bool
+            -Select() Command~Company~?
+        }
+        
+        class Program {
+            -const string dataFilePath
+            -const string applicationName
+            -Company company
+            -CommandManager operationManager
+            -Run() void
+            -Load() bool
+            -Save() bool
+            +Main(string[] args)$ void
+        }
+    }
+    
+    IDisposable <|.. ConsoleColorSetter
+    Window <|-- ConfirmBox
+    Window <|-- DialogBox~TModel~
+    Command~TModel~ <|-- SingleStepCommand~TModel~
+    SingleStepCommand~Company~ <|-- ShowStaffsCommand
+    Command~Company~ <|-- SearchStaffsCommand
+    Command~Company~ <|-- AddStaffCommand
+    Command~Company~ <|-- AddDepartmentCommand
+    SingleStepCommand~Company~ <|-- ShowDepartmentsCommand
+    SingleStepCommand~Company~ <|-- ExitCommand
+    CommandManager o-- Menu~Company~
+    Program *-- Company
+    Program *-- CommandManager
+```
+
+#### Shos.StaffManager.MCPServer Project
+
+The MCP server exposes staff management functionality to AI assistants:
+
+```mermaid
+classDiagram
+    class Program {
+        <<static>>
+        +Main(string[] args)$ void
+    }
+    
+    class StaffManagerTools {
+        <<static>>
+        -const string dataFilePath
+        -Company company$
+        +GetAllDepartments()$ Department[]
+        +SearchDepartments(string searchText)$ Department[]
+        +AddNewDeparment(Department newDepartment)$ bool
+        +RemoveDeparmentWithCode(int departmentCode)$ bool
+        +GetAllStaffs()$ Staff[]
+        +SearchStaffs(string searchText)$ Staff[]
+        +AddNewStaff(Staff newStaff)$ bool
+        +RemoveStaffWithNumbere(int number)$ bool
+        -Save()$ void
+    }
+    
+    note for StaffManagerTools "MCP Tools for AI Assistant Integration\n- All methods decorated with [McpServerTool]\n- Provides CRUD operations for Staff and Department\n- Uses JSON file persistence"
+    
+    StaffManagerTools ..> Company : uses
+    StaffManagerTools ..> Department : manages
+    StaffManagerTools ..> Staff : manages
+```
+
 ### Project Structure
 ```
 Shos.StaffManager/
