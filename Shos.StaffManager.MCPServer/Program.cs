@@ -26,7 +26,7 @@ namespace Shos.StaffManager.MCPServer
         public static Department[] GetAllDepartments() => company.DepartmentList.ToArray();
 
         [McpServerTool, Description("Search departments by keyword")]
-        public static Department[] SearchDepartments(string searchText) => company.GetDepartments(searchText: searchText).ToArray();
+        public static Department[] SearchDepartments(string keyword) => company.GetDepartments(searchText: keyword).ToArray();
 
         [McpServerTool, Description("Add a new department")]
         public static bool AddNewDepartment(Department newDepartment)
@@ -41,7 +41,7 @@ namespace Shos.StaffManager.MCPServer
         }
 
         [McpServerTool, Description("Remove a department by code")]
-        public static bool RemoveDepartmentWithCode(int departmentCode)
+        public static bool RemoveDepartmentByCode(int departmentCode)
         {
             try {
                 if (company.RemoveDepartment(departmentCode)) {
@@ -56,8 +56,8 @@ namespace Shos.StaffManager.MCPServer
         [McpServerTool, Description("Retrieve all staff members")]
         public static Staff[] GetAllStaffs() => company.StaffList.ToArray();
 
-        [McpServerTool, Description("Search staff by keyword")]
-        public static Staff[] SearchStaffs(string searchText) => company.GetStaffs(searchText: searchText).ToArray();
+        [McpServerTool, Description("Search staff members by keyword")]
+        public static Staff[] SearchStaffs(string keyword) => company.GetStaffs(searchText: keyword).ToArray();
 
         [McpServerTool, Description("Add a new staff member")]
         public static bool AddNewStaff(Staff newStaff)
@@ -72,7 +72,7 @@ namespace Shos.StaffManager.MCPServer
         }
 
         [McpServerTool, Description("Remove a staff member by number")]
-        public static bool RemoveStaffWithNumber(int number)
+        public static bool RemoveStaffbyNumber(int number)
         {
             try {
                 if (company.StaffList.Remove(number)) {
