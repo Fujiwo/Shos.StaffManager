@@ -341,7 +341,7 @@
                 /// <summary>The character used to draw separator lines in the menu</summary>
                 const char separatorCharacter = '-';
 
-                /// <summary>Gets or sets the command table mapping mnemonics to commands</summary>
+                /// <summary>The command table mapping mnemonics to commands</summary>
                 Dictionary<char, Command<TModel>> commandTable = null!;
                 IEnumerable<(char mnemonic, Command<TModel> command)> commands = null!;
 
