@@ -1,9 +1,8 @@
-﻿using Shos.StaffManager.Models;
-using StaffManager.Application.Views;
-using StaffManager.Common.ControllersBase;
+﻿using Shos.StaffManager.Application.Views;
+using Shos.StaffManager.Models;
 using System.ComponentModel;
 
-namespace StaffManager.AI;
+namespace Shos.StaffManager.AI;
 
 static class Toolbox
 {

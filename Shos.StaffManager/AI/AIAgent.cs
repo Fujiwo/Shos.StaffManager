@@ -24,7 +24,7 @@ using ModelContextProtocol.Client;
 // Debug.WriteLine を使うための名前空間
 using System.Diagnostics;
 
-namespace StaffManager.AI;
+namespace Shos.StaffManager.AI;
 
 public abstract class ChatAgent : IAsyncDisposable
 {
