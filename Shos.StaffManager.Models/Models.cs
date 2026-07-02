@@ -17,7 +17,7 @@ namespace Shos.StaffManager.Models
     /// <summary>Represents a department with code and name</summary>
     /// <param name="Code">The department code (100-999)</param>
     /// <param name="Name">The department name (1-30 characters)</param>
-    public record Department(int Code, string Name)
+    public record Department(int Code)
     {
         /// <summary>Minimum allowed department code</summary>
         public const int MinimumCode       = 100;
@@ -27,6 +27,8 @@ namespace Shos.StaffManager.Models
         public const int MinimumNameLength =   1;
         /// <summary>Maximum allowed name length</summary>
         public const int MaximumNameLength =  30;
+
+        public required string Name { get; set; }
     }
 
     /// <summary>Represents a staff member with number, name, ruby reading, and department</summary>
@@ -34,7 +36,7 @@ namespace Shos.StaffManager.Models
     /// <param name="Name">The staff name (1-30 characters)</param>
     /// <param name="Ruby">The phonetic reading of the name</param>
     /// <param name="Department">The department the staff belongs to</param>
-    public record Staff(int Number, string Name, string Ruby, Department Department)
+    public record Staff(int Number, string Name, string Ruby)
     {
         /// <summary>Minimum allowed staff number</summary>
         public const int MinimumNumber     =    1;
@@ -44,6 +46,8 @@ namespace Shos.StaffManager.Models
         public const int MinimumNameLength =    1;
         /// <summary>Maximum allowed name length</summary>
         public const int MaximumNameLength =   30;
+
+        public required Department Department { get; set; }
     }
 
     /// <summary>Serializable version of Staff record that stores department as code instead of object</summary>
@@ -68,7 +72,7 @@ namespace Shos.StaffManager.Models
             var department = departmentList.FirstOrDefault(department => department.Code == DepartmentCode);
             if (department is null)
                 throw new SerializeException("There is no corresponding department code.");
-            return new Staff(Number: Number, Name: Name, Ruby: Ruby, Department: department);
+            return new Staff(Number: Number, Name: Name, Ruby: Ruby) { Department = department };
         }
     }
 
@@ -95,6 +99,19 @@ namespace Shos.StaffManager.Models
             if (foundDepartment is null)
                 return false;
             departments.Remove(foundDepartment);
+            return true;
+        }
+
+        /// <summary>Changes the name of a department with the specified code</summary>
+        /// <param name="code">The code of the department to change</param>
+        /// <param name="newName">The new name for the department</param>
+        /// <returns>True if the department was found and updated, false otherwise</returns>
+        public bool ChangeDepartmentName(int code, string newName)
+        {
+            var foundDepartment = departments.FirstOrDefault(department => department.Code == code);
+            if (foundDepartment is null)
+                return false;
+            foundDepartment.Name = newName;
             return true;
         }
 
@@ -125,6 +142,20 @@ namespace Shos.StaffManager.Models
             if (foundStaff is null)
                 return false;
             staffs.Remove(foundStaff);
+            return true;
+        }
+
+        /// <summary>Changes the department of a staff member with the specified number</summary>
+        /// <param name="number">The number of the staff member</param>
+        /// <param name="depatment">The new department for the staff member</param>
+        /// <returns>True if the staff member was found and updated, false otherwise</returns>
+        public bool ChangeDepartment(int number, Department depatment)
+        {
+            var foundStaff = staffs.FirstOrDefault(staff => staff.Number == number);
+            if (foundStaff is null)
+                return false;
+
+            foundStaff.Department = depatment;
             return true;
         }
 
@@ -198,6 +229,31 @@ namespace Shos.StaffManager.Models
         public bool RemoveDepartment(int departmentCode)
             => StaffList.Any(staff => staff.Department.Code == departmentCode)
                ? false : DepartmentList.Remove(departmentCode);
+
+        /// <summary>Changes the name of a department with the specified code</summary>
+        /// <param name="departmentCode">The code of the department to change</param>
+        /// <param name="newName">The new name for the department</param>
+        /// <returns>True if the department was found and updated, false otherwise</returns>
+        public bool ChangeDepartmentName(int departmentCode, string newName)
+            => DepartmentList.ChangeDepartmentName(departmentCode, newName);
+
+        /// <summary>Changes the department of a staff member with the specified number</summary>
+        /// <param name="number">The number of the staff member</param>
+        /// <param name="newDepartmentCode">The code of the new department</param>
+        /// <returns>True if the staff member was found and updated, false otherwise</returns>
+        public bool ChangeStaffsDepartment(int number, int newDepartmentCode)
+        {
+            var foundStaff = StaffList.FirstOrDefault(staff => staff.Number == number);
+            if (foundStaff == null)
+                return false;
+
+            var newDepartment = DepartmentList.FirstOrDefault(department => department.Code == newDepartmentCode);
+            if (newDepartment == null)
+                return false;
+
+            foundStaff.Department = newDepartment;
+            return true;
+        }
 
         /// <summary>Saves the company data to a JSON file</summary>
         /// <param name="filePath">The path to save the file</param>

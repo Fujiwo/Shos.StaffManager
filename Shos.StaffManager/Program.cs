@@ -440,6 +440,7 @@
             using Common.ControllersBase;
             using Common.Helpers;
             using Views;
+            using AI;
 
             /// <summary>Command to display all staff members</summary>
             class ShowStaffsCommand : SingleStepCommand<Company>
@@ -550,7 +551,7 @@
                         if (deparment is null)
                             throw new InvalidOperationException("Department not found");
 
-                        return new Staff(Number: Number, Name: Name, Ruby: Ruby, Department: deparment);
+                        return new Staff(Number: Number, Name: Name, Ruby: Ruby) { Department = deparment };
                     }
                 }
 
@@ -701,7 +702,7 @@
                     public string Name { get; set; } = "";
 
                     public Department ToDepartment()
-                        => new Department(Code: Code, Name: Name);
+                        => new Department(Code: Code) { Name = Name };
                 }
 
                 Input input = new();
@@ -737,7 +738,6 @@
                         return false;
                     input.Name = newName;
                     return true;
-
                 }
 
                 /// <summary>Confirms and adds the department to the company</summary>
@@ -798,6 +798,45 @@
                 protected override bool RunFeature(Company company) => false;
             }
 
+            /// <summary>Command to start AI chat</summary>
+            class AIChatCommand : SingleStepCommand<Company>
+            {
+                MyChatAgent chatAgent = new();
+
+                /// <summary>Gets the command mode (exit)</summary>
+                public override CommandMode Mode => CommandMode.Repeat;
+
+                /// <summary>Gets the title of the command</summary>
+                public override string Title => "AIチャット";
+
+                /// <summary>Executes the exit feature</summary>
+                /// <param name="company">The company model</param>
+                /// <returns>Always returns false to exit</returns>
+                protected override bool RunFeature(Company company)
+                {
+                    var prompt = GetPrompt();
+                    if (prompt is null)
+                        return false;
+                    var response = GetResponse(prompt);
+                    UserInterface.Show($"AI: {response}");
+                    return true;
+                }
+
+                string GetResponse(string prompt)
+                    => chatAgent.GetResponseAsync(prompt).Result;
+
+                static string? GetPrompt()
+                {
+                    const string label = "プロンプト";
+                    var result = UserInterface.Get<string>(
+                        message: $"{label}を入力してください",
+                        [(rule: text => !string.IsNullOrWhiteSpace(text),
+                         errorMessage: $"{label}は空白以外の文字を入力してください")]
+                    );
+                    return result.isAvailable ? result.item : null;
+                }
+            }
+
             /// <summary>Manages the execution of commands through a menu system</summary>
             class CommandManager
             {
@@ -814,6 +853,7 @@
                             ('a', new AddStaffCommand       ()),
                             ('d', new ShowDepartmentsCommand()),
                             ('e', new AddDepartmentCommand  ()),
+                            ('c', new AIChatCommand         ()),
                             ('x', new ExitCommand           ())
                         ]
                     };
@@ -824,6 +864,8 @@
                 /// <returns>True to continue running, false to exit</returns>
                 public bool Run(Company model)
                 {
+                    Toolbox.Company = model;
+
                     var command = Select();
                     if (command is null)
                         return false;
