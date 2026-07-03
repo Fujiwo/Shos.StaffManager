@@ -5,7 +5,7 @@
         "args": [
             "run",
             "--project",
-            "C:\\DropBox\\Dropbox\\Source\\GitHub\\Repos\\Shos.StaffManager\\Shos.StaffManager.MCPServer.csproj"
+            "C:\\DropBox\\Dropbox\\Source\\GitHub\\Repos\\Shos.StaffManager\\Shos.StaffManager.MCPServer\\Shos.StaffManager.MCPServer.csproj"
         ]
     }
 }
