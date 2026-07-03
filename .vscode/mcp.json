@@ -1,0 +1,14 @@
+{
+	"servers": {
+		"my-mcp-server-95787fc8": {
+			"type": "stdio",
+			"command": "dotnet",
+			"args": [
+				"run",
+				"--project",
+				"C:\\DropBox\\Dropbox\\Source\\GitHub\\Repos\\Shos.StaffManager\\Shos.StaffManager.MCPServer\\Shos.StaffManager.MCPServer.csproj"
+			]
+		}
+	},
+	"inputs": []
+}
