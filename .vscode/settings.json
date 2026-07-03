@@ -1,0 +1,11 @@
+"servers": {
+    "MCPServer.Console": {
+        "type": "stdio",
+        "command": "dotnet",
+        "args": [
+            "run",
+            "--project",
+            "C:\\DropBox\\Dropbox\\Source\\GitHub\\Repos\\Shos.StaffManager\\Shos.StaffManager.MCPServer.csproj"
+        ]
+    }
+}

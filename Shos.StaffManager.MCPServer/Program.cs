@@ -33,7 +33,7 @@ namespace Shos.StaffManager.MCPServer
         {
             try {
                 company.DepartmentList.Add(newDepartment);
-                company.Save(dataFilePath);
+                Save();
                 return true;
             } catch {
                 return false;
@@ -45,7 +45,20 @@ namespace Shos.StaffManager.MCPServer
         {
             try {
                 if (company.RemoveDepartment(departmentCode)) {
-                    company.Save(dataFilePath);
+                    Save();
+                    return true;
+                }
+            } catch {
+            }
+            return false;
+        }
+
+        [McpServerTool, Description("Change a department's name by department code")]
+        public static bool ChangeDepartmentNameByCode(int departmentCode, string newName)
+        {
+            try {
+                if (company is not null && company.ChangeDepartmentName(departmentCode, newName)) {
+                    Save();
                     return true;
                 }
             } catch {
@@ -76,7 +89,21 @@ namespace Shos.StaffManager.MCPServer
         {
             try {
                 if (company.StaffList.Remove(number)) {
-                    company.Save(dataFilePath);
+                    Save();
+                    return true;
+                }
+            } catch {
+            }
+            return false;
+        }
+
+
+        [McpServerTool, Description("Change a staff member's department by staff number")]
+        public static bool ChangeStaffsDepartmentByNumber(int number, int newDepartmentCode)
+        {
+            try {
+                if (company is not null && company.ChangeStaffsDepartment(number, newDepartmentCode)) {
+                    Save();
                     return true;
                 }
             } catch {
