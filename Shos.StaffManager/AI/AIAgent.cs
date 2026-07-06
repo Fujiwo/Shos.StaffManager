@@ -6,7 +6,7 @@ dotnet add package ModelContextProtocol --prerelease
 dotnet add package OllamaSharp
  */
 
-#define AZURE_OPENAI
+//#define AZURE_OPENAI
 #if AZURE_OPENAI
 // Azure OpenAI のクライアント用
 using Azure;
