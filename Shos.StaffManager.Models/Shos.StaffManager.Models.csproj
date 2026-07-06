@@ -8,4 +8,8 @@
     <AnalysisLevel>latest-Minimum</AnalysisLevel>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="Shos.UndoRedoList" Version="1.0.5" />
+  </ItemGroup>
+
 </Project>

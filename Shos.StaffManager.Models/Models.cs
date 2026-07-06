@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Shos.Collections;
+using System.Collections;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -80,7 +81,8 @@ namespace Shos.StaffManager.Models
     public class DepartmentList : IEnumerable<Department>
     {
         /// <summary>Internal list that stores the department objects</summary>
-        List<Department> departments = new();
+        //List<Department> departments = new();
+        UndoRedoList<Department> departments = new();
 
         /// <summary>Gets the department at the specified index</summary>
         /// <param name="index">The index of the department</param>
@@ -128,7 +130,8 @@ namespace Shos.StaffManager.Models
     public class StaffList : IEnumerable<Staff>
     {
         /// <summary>Internal list that stores the staff member objects</summary>
-        List<Staff> staffs = new();
+        //List<Staff> staffs = new();
+        UndoRedoList<Staff> staffs = new();
 
         /// <summary>Adds a staff member to the list</summary>
         /// <param name="staff">The staff member to add</param>
