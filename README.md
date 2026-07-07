@@ -1,6 +1,6 @@
 # Shos.StaffManager
 
-A console-based staff management system built with .NET 9.0 and C#. This application provides an interactive command-line interface for managing staff members and departments with Japanese language support.
+A console-based staff management system built with .NET 10.0 and C#. This application provides an interactive command-line interface for managing staff members and departments with Japanese language support, an in-app AI chat assistant built with the Microsoft Agent Framework, and a standalone MCP (Model Context Protocol) server for external AI assistant integration.
 
 ## Learning Value for Programming Students
 
@@ -91,9 +91,9 @@ This codebase provides a realistic, well-structured example that bridges the gap
 ## Features
 
 ### Core Functionality
-- **Staff Management**: Add, list, and search staff members
-- **Department Management**: Add and list organizational departments  
-- **Search Capabilities**: Find staff by name, employee number, or department
+- **Staff Management**: Add, list, search, and reassign the department of staff members
+- **Department Management**: Add, list, search, and rename organizational departments
+- **Search Capabilities**: Find staff by name, employee number, or department; find departments by name or code
 - **Data Persistence**: Automatic JSON file storage with UTF-8 encoding
 - **Japanese Support**: Full support for Japanese characters with proper display width calculation
 - **MCP Integration**: Model Context Protocol server for AI assistant integration
@@ -105,10 +105,15 @@ This codebase provides a realistic, well-structured example that bridges the gap
 - Confirmation dialogs for data entry operations
 - Repeatable commands for bulk operations
 
-### AI Assistant Integration
-- **MCP Server**: Exposes staff management functionality through Model Context Protocol
+### AI Chat (In-App)
+- **Embedded AI Assistant**: The **(c) AIチャット** menu command opens a chat with an AI agent built on the [Microsoft Agent Framework](https://www.nuget.org/packages/Microsoft.Agents.AI/), running directly inside the console app
+- **Pluggable Chat Backend**: Uses a local [Ollama](https://ollama.com/) server by default, or Azure OpenAI when the `AZURE_OPENAI` compilation symbol is enabled
+- **Tool Calling**: The agent can call the staff/department management tools (`Toolbox`) as well as an external Brave Search MCP tool
+
+### AI Assistant Integration (MCP Server)
+- **MCP Server**: The separate `Shos.StaffManager.MCPServer` project exposes staff management functionality through the Model Context Protocol for external AI assistants (Claude Desktop, VS Code, etc.)
 - **Tool-based Access**: AI assistants can directly manage staff and departments
-- **Real-time Operations**: Add, remove, search, and list operations available via MCP tools
+- **Real-time Operations**: Add, remove, search, rename, and reassign operations available via MCP tools
 
 ## Technical Architecture
 
@@ -119,319 +124,31 @@ This codebase provides a realistic, well-structured example that bridges the gap
 
 ### Class Diagrams
 
-#### Shos.StaffManager.Models Project
+Up-to-date Mermaid class diagrams for the whole solution are maintained separately in [Documents/ClassDiagrams.md](Documents/ClassDiagrams.md):
 
-The models project contains the core domain entities and data structures:
-
-```mermaid
-classDiagram
-    class SerializeException {
-        +SerializeException(string message)
-    }
-    
-    class Department {
-        <<record>>
-        +int Code
-        +string Name
-        +const int MinimumCode = 100
-        +const int MaximumCode = 999
-        +const int MinimumNameLength = 1
-        +const int MaximumNameLength = 30
-    }
-    
-    class Staff {
-        <<record>>
-        +int Number
-        +string Name
-        +string Ruby
-        +Department Department
-        +const int MinimumNumber = 1
-        +const int MaximumNumber = 9999
-        +const int MinimumNameLength = 1
-        +const int MaximumNameLength = 30
-    }
-    
-    class SerializableStaff {
-        <<record>>
-        +int Number
-        +string Name
-        +string Ruby
-        +int DepartmentCode
-        +From(Staff staff)$ SerializableStaff
-        +To(DepartmentList departmentList) Staff
-    }
-    
-    class DepartmentList {
-        -List~Department~ departments
-        +this[int index] Department
-        +Add(Department department) void
-        +Remove(int code) bool
-        +GetEnumerator() IEnumerator~Department~
-    }
-    
-    class StaffList {
-        -List~Staff~ staffs
-        +Add(Staff staff) void
-        +Remove(int number) bool
-        +GetEnumerator() IEnumerator~Staff~
-    }
-    
-    class Company {
-        +string Version
-        +DepartmentList DepartmentList
-        +StaffList StaffList
-        -Department[] SerializableDepartmentList
-        -IEnumerable~SerializableStaff~ SerializableStaffList
-        +GetDepartments(string searchText) IEnumerable~Department~
-        +GetStaffs(string searchText) IEnumerable~Staff~
-        +RemoveDepartment(int departmentCode) bool
-        +Save(string filePath) void
-        +Load(string filePath)$ Company
-    }
-    
-    ApplicationException <|-- SerializeException
-    IEnumerable~Department~ <|.. DepartmentList
-    IEnumerable~Staff~ <|.. StaffList
-    Company *-- DepartmentList
-    Company *-- StaffList
-    DepartmentList o-- Department
-    StaffList o-- Staff
-    Staff *-- Department
-    SerializableStaff ..> Staff : converts to/from
-    SerializableStaff ..> DepartmentList : uses for conversion
-```
-
-#### Shos.StaffManager Console Application
-
-The main console application follows MVC architecture with command pattern:
-
-```mermaid
-classDiagram
-    namespace Common.Helpers {
-        class EnumerableExtensions {
-            <<static>>
-            +ForEach~TElement~(IEnumerable~TElement~ this, Action~TElement~ action)$
-        }
-        
-        class StringExtensions {
-            <<static>>
-            +Width(string this)$ int
-            +IsZenkaku(char this)$ bool
-            +IsZenkaku(string this)$ bool
-        }
-        
-        class TypeParser {
-            <<static>>
-            +Parse~T~(string this)$ T?
-            +TryParse~T~(string this)$ (bool canParse, T? result)
-            +Parse(Type this, string text)$ object?
-            +TryParse(Type this, string text)$ (bool canParse, object? result)
-        }
-        
-        class ConsoleColorSetter {
-            -ConsoleColor oldForeground
-            -ConsoleColor oldBackground
-            +Foreground ConsoleColor
-            +Background ConsoleColor
-            +Dispose() void
-        }
-        
-        class UserInterface {
-            <<static>>
-            +string CancelString
-            +string ErrorHeader
-            +Get~T~(string message, IEnumerable rules)$ (bool isAvailable, T? item)
-            +GetMnemonic(string message, string mnemonics)$ (bool isAvailable, char mnemonic)
-            +ShowPrompt(string message)$ void
-            +ShowError(string message)$ void
-            +Show(string message)$ void
-        }
-    }
-    
-    namespace Common.ControllersBase {
-        class CommandMode {
-            <<enumeration>>
-            Exit
-            Once
-            Repeat
-        }
-        
-        class Window {
-            <<abstract>>
-            +string Title
-            #ShowTitleBar(int separatorLength) void
-            #ShowSeparator(int separatorLength)$ void
-        }
-        
-        class ConfirmBox {
-            +Show(string text, string message) bool
-        }
-        
-        class DialogBox~TModel~ {
-            +Func~TModel, bool~[] Steps
-            +Show(TModel model) bool
-        }
-        
-        class Command~TModel~ {
-            <<abstract>>
-            +virtual CommandMode Mode
-            +abstract string Title
-            +virtual Func~TModel, bool~[] Steps
-            +Run(TModel model) bool
-        }
-        
-        class SingleStepCommand~TModel~ {
-            <<abstract>>
-            +Func~TModel, bool~[] Steps
-            #abstract RunFeature(TModel model) bool
-        }
-        
-        class Menu~TModel~ {
-            -Dictionary~char, Command~TModel~~ commandTable
-            +IEnumerable Commands
-            +Select(string message) Command~TModel~?
-        }
-    }
-    
-    namespace Views {
-        class View {
-            <<static>>
-            +Show(IEnumerable~Department~ departments)$ void
-            +Show(IEnumerable~Staff~ staffs)$ void
-            +ShowDepartments(Company company)$ void
-            +ShowStaffs(Company company)$ void
-            +ShowStaffs(Company company, string searchText)$ void
-        }
-    }
-    
-    namespace Controllers {
-        class ShowStaffsCommand {
-            +string Title
-            #RunFeature(Company model) bool
-        }
-        
-        class SearchStaffsCommand {
-            +CommandMode Mode
-            +string Title
-            +Func~Company, bool~[] Steps
-            -string searchString
-        }
-        
-        class AddStaffCommand {
-            +CommandMode Mode
-            +string Title
-            +Func~Company, bool~[] Steps
-            -Input input
-        }
-        
-        class AddDepartmentCommand {
-            +CommandMode Mode
-            +string Title
-            +Func~Company, bool~[] Steps
-            -Input input
-        }
-        
-        class ShowDepartmentsCommand {
-            +string Title
-            #RunFeature(Company model) bool
-        }
-        
-        class ExitCommand {
-            +CommandMode Mode
-            +string Title
-            #RunFeature(Company model) bool
-        }
-        
-        class CommandManager {
-            -Menu~Company~ menu
-            +Run(Company model) bool
-            -Select() Command~Company~?
-        }
-        
-        class Program {
-            -const string dataFilePath
-            -const string applicationName
-            -Company company
-            -CommandManager operationManager
-            -Run() void
-            -Load() bool
-            -Save() bool
-            +Main(string[] args)$ void
-        }
-    }
-    
-    IDisposable <|.. ConsoleColorSetter
-    Window <|-- ConfirmBox
-    Window <|-- DialogBox~TModel~
-    Command~TModel~ <|-- SingleStepCommand~TModel~
-    Command~TModel~ ..> CommandMode : uses
-    SingleStepCommand~Company~ <|-- ShowStaffsCommand
-    Command~Company~ <|-- SearchStaffsCommand
-    Command~Company~ <|-- AddStaffCommand
-    Command~Company~ <|-- AddDepartmentCommand
-    SingleStepCommand~Company~ <|-- ShowDepartmentsCommand
-    SingleStepCommand~Company~ <|-- ExitCommand
-    CommandManager o-- Menu~Company~
-    Program *-- Company
-    Program *-- CommandManager
-```
-
-#### Shos.StaffManager.MCPServer Project
-
-The MCP server exposes staff management functionality to AI assistants:
-
-```mermaid
-classDiagram
-    class Program {
-        <<static>>
-        +Main(string[] args)$ void
-    }
-    
-    class StaffManagerTools {
-        <<static>>
-        -const string dataFilePath
-        -Company company$
-        +GetAllDepartments()$ Department[]
-        +SearchDepartments(string searchText)$ Department[]
-        +AddNewDeparment(Department newDepartment)$ bool
-        +RemoveDeparmentWithCode(int departmentCode)$ bool
-        +GetAllStaffs()$ Staff[]
-        +SearchStaffs(string searchText)$ Staff[]
-        +AddNewStaff(Staff newStaff)$ bool
-        +RemoveStaffWithNumbere(int number)$ bool
-        -Save()$ void
-    }
-    
-    note for StaffManagerTools "MCP Tools for AI Assistant Integration\n- All methods decorated with [McpServerTool]\n- Provides CRUD operations for Staff and Department\n- Uses JSON file persistence"
-    
-    StaffManagerTools ..> Company : uses
-    StaffManagerTools ..> Department : manages
-    StaffManagerTools ..> Staff : manages
-```
+- **Namespace diagram**: dependency relationships between all namespaces across the 3 projects (`Shos.StaffManager`, `Shos.StaffManager.Models`, `Shos.StaffManager.MCPServer`)
+- **Class diagram**: every class/record in the solution (inheritance, composition, aggregation, and dependency relationships), grouped by namespace
 
 ### Project Structure
 ```
 Shos.StaffManager/
-├── Shos.StaffManager/          # Main console application
-│   ├── Models/
-│   │   ├── Staff.cs              # Staff record with validation
-│   │   ├── Department.cs         # Department record  
-│   │   ├── Company.cs            # Main data container
-│   │   └── SerializableStaff.cs  # JSON serialization support
-│   ├── Views/
-│   │   └── View.cs               # Data display formatting
-│   ├── Controllers/
-│   │   ├── Commands/             # Menu command implementations
-│   │   └── CommandManager.cs     # Command orchestration
+├── Shos.StaffManager/                  # Main console application
+│   ├── Program.cs                        # Entry point (Load → menu loop → Save)
+│   ├── Application/
+│   │   ├── View.cs                       # Data display formatting (Views namespace)
+│   │   └── Controllers.cs                # Menu commands + CommandManager (Controllers namespace)
+│   ├── AI/
+│   │   ├── AIAgent.cs                    # ChatAgent / MyChatAgent (Microsoft Agent Framework)
+│   │   └── ToolBox.cs                    # Function-calling tools for the in-app AI chat
 │   ├── Common/
-│   │   ├── Helpers/              # Utility classes
-│   │   └── ControllersBase/      # Base UI components
+│   │   ├── Helpers.cs                    # UserInterface, TypeParser, extension methods
+│   │   └── ControllerBase.cs             # Window, Command<TModel>, Menu<TModel> base types
 │   └── Data/
-│       └── FC.StaffManager.json  # Sample data file
-├── Shos.StaffManager.Models/   # Shared data models library
-└── Shos.StaffManager.MCPServer/ # MCP server for AI integration
-    ├── Program.cs               # MCP server implementation
-    └── StaffManagerTools.cs     # MCP tool definitions
+│       └── FC.StaffManager.json          # Sample data file
+├── Shos.StaffManager.Models/            # Shared data models library
+│   └── Models.cs                         # Department, Staff, DepartmentList, StaffList, Company
+└── Shos.StaffManager.MCPServer/         # MCP server for external AI assistant integration
+    └── Program.cs                        # Host setup + StaffManagerTools (MCP tool definitions)
 ```
 
 ### Data Model
@@ -474,15 +191,17 @@ The MCP server provides the following tools for AI assistants:
 
 **Department Management:**
 - `GetAllDepartments()` - Retrieve all departments
-- `SearchDepartments(searchText)` - Search departments by keyword
-- `AddNewDeparment(newDepartment)` - Add a new department
-- `RemoveDeparmentWithCode(departmentCode)` - Remove a department by code
+- `SearchDepartments(keyword)` - Search departments by keyword
+- `AddNewDepartment(newDepartment)` - Add a new department
+- `RemoveDepartmentByCode(departmentCode)` - Remove a department by code
+- `ChangeDepartmentNameByCode(departmentCode, newName)` - Rename a department by code
 
 **Staff Management:**
 - `GetAllStaffs()` - Retrieve all staff members
-- `SearchStaffs(searchText)` - Search staff by keyword
+- `SearchStaffs(keyword)` - Search staff by keyword
 - `AddNewStaff(newStaff)` - Add a new staff member
-- `RemoveStaffWithNumbere(number)` - Remove a staff member by number
+- `RemoveStaffbyNumber(number)` - Remove a staff member by number
+- `ChangeStaffsDepartmentByNumber(number, newDepartmentCode)` - Reassign a staff member's department by staff number
 
 #### Setting Up the MCP Server
 
@@ -542,13 +261,19 @@ This integration transforms the console-based staff management system into a pow
 ## Requirements
 
 ### Console Application
-- **.NET 9.0** or later
-- **Shos.Console 1.1.5** (automatically installed via NuGet)
+- **.NET 10.0** or later
+- **Shos.Console 1.1.5**, **Shos.UndoRedoList 1.0.5** (via `Shos.StaffManager.Models`)
+- **Microsoft.Agents.AI 1.12.0** / **Microsoft.Agents.AI.OpenAI 1.12.0** - Microsoft Agent Framework for the in-app AI chat
+- **OllamaSharp 5.4.25** - local LLM chat client (default backend)
+- **Azure.AI.OpenAI 2.1.0** - optional Azure OpenAI chat client (enable via the `AZURE_OPENAI` compilation symbol)
+- **ModelContextProtocol 1.4.0** - MCP client used by the in-app AI chat to call an external Brave Search tool
+
+(all packages above are automatically installed via NuGet)
 
 ### MCP Server
-- **.NET 9.0** or later
-- **ModelContextProtocol 0.3.0-preview.3** (automatically installed via NuGet)
-- **Microsoft.Extensions.Hosting 9.0.7** (automatically installed via NuGet)
+- **.NET 10.0** or later
+- **ModelContextProtocol 1.4.0** (automatically installed via NuGet)
+- **Microsoft.Extensions.Hosting 10.0.9** (automatically installed via NuGet)
 
 ## Installation & Setup
 
@@ -590,10 +315,11 @@ This integration transforms the console-based staff management system into a pow
 The application presents a Japanese menu with the following options:
 
 - **(s) 社員一覧** - List all staff members
-- **(f) 社員検索** - Search for staff members  
+- **(f) 社員検索** - Search for staff members
 - **(a) 社員追加** - Add a new staff member
 - **(d) 部署一覧** - List all departments
 - **(e) 部署追加** - Add a new department
+- **(c) AIチャット** - Chat with the in-app AI assistant
 - **(x) 終了** - Exit the application
 
 ### Sample Operations
@@ -648,14 +374,21 @@ The application automatically creates a new data file if none exists. Sample dat
 ## Key Technologies
 
 ### Core Technologies
-- **.NET 9.0**: Modern C# with latest language features
+- **.NET 10.0**: Modern C# with latest language features
 - **System.Text.Json**: High-performance JSON serialization
 - **Shos.Console**: Enhanced console table formatting
+- **Shos.UndoRedoList**: Undo/redo-capable collections used internally by `DepartmentList`/`StaffList`
 - **Records**: Immutable data structures with validation
 - **LINQ**: Functional query operations
 - **UTF-8**: Full Unicode support for Japanese text
 
-### MCP Integration
+### AI Chat Integration (In-App)
+- **Microsoft Agent Framework** (`Microsoft.Agents.AI`): Agent/session abstraction for the "AIチャット" menu command
+- **OllamaSharp**: Default local LLM chat client (`http://localhost:11434`)
+- **Azure.AI.OpenAI**: Optional Azure OpenAI chat client (behind the `AZURE_OPENAI` compilation symbol)
+- **ModelContextProtocol (client)**: Lets the in-app agent call an external Brave Search MCP tool alongside its own `Toolbox` functions
+
+### MCP Integration (Server)
 - **ModelContextProtocol**: Standard protocol for AI assistant tool integration
 - **Microsoft.Extensions.Hosting**: .NET hosting model for the MCP server
 - **Stdio Transport**: Standard input/output communication with AI assistants
