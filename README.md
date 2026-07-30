@@ -1,6 +1,20 @@
 # Shos.StaffManager
 
+[日本語版 README はこちら / Japanese version](README.jp.md)
+
 A console-based staff management system built with .NET 10.0 and C#. This application provides an interactive command-line interface for managing staff members and departments with Japanese language support, an in-app AI chat assistant built with the Microsoft Agent Framework, and a standalone MCP (Model Context Protocol) server for external AI assistant integration.
+
+## Purpose and Intended Use
+
+Shos.StaffManager is a sample application whose goal is to show how a small, realistic line-of-business tool can be written in modern C# and then opened up to AI assistants.
+
+It is intended to be used for:
+
+- **Managing a small staff roster**: keeping a list of departments and staff members (number, name, phonetic reading, department) in a single JSON file, edited through an interactive Japanese console UI
+- **Learning modern .NET**: studying records, generics, LINQ, `System.Text.Json` serialization, the command pattern, and console UI construction in a codebase that is larger than a tutorial but still small enough to read end to end
+- **Experimenting with AI integration**: talking to the roster through the built-in AI chat (Microsoft Agent Framework + Ollama or Azure OpenAI), and exposing the same operations to external AI assistants such as Claude Desktop or VS Code through the bundled MCP server
+
+It is **not** intended as a production HR system: there is no database, no authentication, and no concurrency control beyond last-writer-wins on the JSON file.
 
 ## Learning Value for Programming Students
 
@@ -107,8 +121,8 @@ This codebase provides a realistic, well-structured example that bridges the gap
 
 ### AI Chat (In-App)
 - **Embedded AI Assistant**: The **(c) AIチャット** menu command opens a chat with an AI agent built on the [Microsoft Agent Framework](https://www.nuget.org/packages/Microsoft.Agents.AI/), running directly inside the console app
-- **Pluggable Chat Backend**: Uses a local [Ollama](https://ollama.com/) server by default, or Azure OpenAI when the `AZURE_OPENAI` compilation symbol is enabled
-- **Tool Calling**: The agent can call the staff/department management tools (`Toolbox`) as well as an external Brave Search MCP tool
+- **Pluggable Chat Backend**: Uses a local [Ollama](https://ollama.com/) server (`http://localhost:11434`, model `minimax-m3:cloud`) by default, or Azure OpenAI when the `AZURE_OPENAI` compilation symbol is enabled
+- **Tool Calling**: The agent can call the staff/department management tools (`Toolbox`) as well as an external Brave Search MCP tool launched via `npx @modelcontextprotocol/server-brave-search`
 
 ### AI Assistant Integration (MCP Server)
 - **MCP Server**: The separate `Shos.StaffManager.MCPServer` project exposes staff management functionality through the Model Context Protocol for external AI assistants (Claude Desktop, VS Code, etc.)
@@ -261,21 +275,26 @@ This integration transforms the console-based staff management system into a pow
 ## Requirements
 
 ### Console Application
-- **.NET 10.0** or later
+- **.NET 10.0 SDK** or later (Windows, macOS, or Linux; Visual Studio 2026 or later is optional)
 - **Shos.Console 1.1.5**, **Shos.UndoRedoList 1.0.5** (via `Shos.StaffManager.Models`)
-- **Microsoft.Agents.AI 1.12.0** / **Microsoft.Agents.AI.OpenAI 1.12.0** - Microsoft Agent Framework for the in-app AI chat
-- **OllamaSharp 5.4.25** - local LLM chat client (default backend)
+- **Microsoft.Agents.AI 1.14.0** / **Microsoft.Agents.AI.OpenAI 1.14.0** - Microsoft Agent Framework for the in-app AI chat
+- **OllamaSharp 5.4.27** - local LLM chat client (default backend)
 - **Azure.AI.OpenAI 2.1.0** - optional Azure OpenAI chat client (enable via the `AZURE_OPENAI` compilation symbol)
-- **ModelContextProtocol 1.4.0** - MCP client used by the in-app AI chat to call an external Brave Search tool
+- **ModelContextProtocol 1.4.1** - MCP client used by the in-app AI chat to call an external Brave Search tool
 
 (all packages above are automatically installed via NuGet)
 
-### MCP Server
-- **.NET 10.0** or later
-- **ModelContextProtocol 1.4.0** (automatically installed via NuGet)
-- **Microsoft.Extensions.Hosting 10.0.9** (automatically installed via NuGet)
+Optional, only for the **(c) AIチャット** command:
 
-## Installation & Setup
+- A running [Ollama](https://ollama.com/) server on `http://localhost:11434` with the `minimax-m3:cloud` model, **or** the `AZURE_OPENAI_ENDPOINT` / `AZURE_OPENAI_API_KEY` environment variables when built with the `AZURE_OPENAI` compilation symbol
+- [Node.js](https://nodejs.org/) (for `npx`) and a `BRAVE_API_KEY` environment variable for the external Brave Search MCP tool
+
+### MCP Server
+- **.NET 10.0 SDK** or later
+- **ModelContextProtocol 1.4.1** (automatically installed via NuGet)
+- **Microsoft.Extensions.Hosting 10.0.10** (automatically installed via NuGet)
+
+## Installation & Build
 
 ### Console Application
 
@@ -286,14 +305,22 @@ This integration transforms the console-based staff management system into a pow
    ```
 
 2. **Build the application**:
+
+   With the .NET CLI:
    ```bash
    dotnet build
    ```
+
+   With Visual Studio:
+   1. Open `Shos.StaffManager.sln`
+   2. Set `Shos.StaffManager` as the startup project
+   3. Build the solution (**Build** > **Build Solution**, or `Ctrl+Shift+B`)
 
 3. **Run the console application**:
    ```bash
    dotnet run --project Shos.StaffManager
    ```
+   In Visual Studio, press `F5` (debug) or `Ctrl+F5` (without debugging).
 
 ### MCP Server Setup
 
@@ -346,6 +373,11 @@ The application presents a Japanese menu with the following options:
 
 ## Data Storage
 
+### File Location
+Both the console application and the MCP server read and write the same hard-coded file path, `C:\work\FC.StaffManager.json` (defined as `dataFilePath` in `Shos.StaffManager/Program.cs` and `Shos.StaffManager.MCPServer/Program.cs`). Change that constant to use a different location.
+
+The console application loads the file at startup and saves it on exit, while the MCP server saves after every mutating tool call, so running both against the same file at the same time is last-writer-wins.
+
 ### File Format
 Data is stored in `FC.StaffManager.json` using UTF-8 encoding with pretty-printed JSON:
 
@@ -368,8 +400,8 @@ Data is stored in `FC.StaffManager.json` using UTF-8 encoding with pretty-printe
 }
 ```
 
-### Data Migration
-The application automatically creates a new data file if none exists. Sample data is included in the `Data/` directory for testing purposes.
+### Getting Started with Data
+If the file does not exist, the application starts with an empty company and creates the file on the next save. Sample data is included in `Shos.StaffManager/Data/FC.StaffManager.json`; copy it to `C:\work\FC.StaffManager.json` to start with populated departments and staff.
 
 ## Key Technologies
 
@@ -423,4 +455,4 @@ This project follows standard .NET development practices:
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE.txt](LICENSE.txt) file for details.
+This project is licensed under the MIT License, a permissive license that allows free use, modification, and redistribution (including commercial use) as long as the copyright notice and license text are included. See the [LICENSE.txt](LICENSE.txt) file for details.
