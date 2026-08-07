@@ -24,8 +24,8 @@ class View
         => staffs.OrderBy(staff => staff.Department.Code)
                  .ThenBy(staff => staff.Number)
                  .Select(staff => new {
-                     Number = $"{staff.Number:D4}",
-                     Name = $"{staff.Name}({staff.Ruby})",
+                     Number     = $"{staff.Number:D4}",
+                     Name       = $"{staff.Name}({staff.Ruby})",
                      Department = $"{staff.Department.Name}({staff.Department.Code})"
                  })
                  .ShowTable();

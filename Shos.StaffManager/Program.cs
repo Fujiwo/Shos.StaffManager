@@ -1,6 +1,7 @@
 ﻿/// <summary>Main application namespace containing models, views, and controllers</summary>
 namespace Shos.StaffManager.Application;
 
+using Shos.Console;
 using Shos.StaffManager.Common.Helpers;
 using Shos.StaffManager.Models;
 
@@ -20,13 +21,19 @@ class Program
     /// <summary>Runs the main application loop</summary>
     void Run()
     {
-        if (!Load())
-            return;
+        var books = new[] {
+            new { Title = "The Great Gatsby", Author = "F. Scott Fitzgerald", Year = 1925 },
+            new { Title = "To Kill a Mockingbird", Author = "Harper Lee", Year = 1960 }
+        };
+        books.ShowTable();
 
-        ShowTitle();
-        while (operationManager.Run(company))
-            ;
-        Save();
+        //if (!Load())
+        //    return;
+
+        //ShowTitle();
+        //while (operationManager.Run(company))
+        //    ;
+        //Save();
     }
 
     bool Load()

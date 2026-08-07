@@ -414,12 +414,12 @@ class CommandManager
         menu = new() {
             Commands = [
                 ('s', new ShowStaffsCommand     ()),
-                        ('f', new SearchStaffsCommand   ()),
-                        ('a', new AddStaffCommand       ()),
-                        ('d', new ShowDepartmentsCommand()),
-                        ('e', new AddDepartmentCommand  ()),
-                        ('c', new AIChatCommand         ()),
-                        ('x', new ExitCommand           ())
+                ('f', new SearchStaffsCommand   ()),
+                ('a', new AddStaffCommand       ()),
+                ('d', new ShowDepartmentsCommand()),
+                ('e', new AddDepartmentCommand  ()),
+                ('c', new AIChatCommand         ()),
+                ('x', new ExitCommand           ())
             ]
         };
     }
