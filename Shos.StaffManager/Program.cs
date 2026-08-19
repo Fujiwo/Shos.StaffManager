@@ -21,19 +21,13 @@ class Program
     /// <summary>Runs the main application loop</summary>
     void Run()
     {
-        var books = new[] {
-            new { Title = "The Great Gatsby", Author = "F. Scott Fitzgerald", Year = 1925 },
-            new { Title = "To Kill a Mockingbird", Author = "Harper Lee", Year = 1960 }
-        };
-        books.ShowTable();
+        if (!Load())
+            return;
 
-        //if (!Load())
-        //    return;
-
-        //ShowTitle();
-        //while (operationManager.Run(company))
-        //    ;
-        //Save();
+        ShowTitle();
+        while (operationManager.Run(company))
+            ;
+        Save();
     }
 
     bool Load()

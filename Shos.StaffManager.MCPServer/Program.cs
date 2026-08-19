@@ -19,6 +19,7 @@ namespace Shos.StaffManager.MCPServer
     [McpServerToolType]
     public static class StaffManagerTools
     {
+        // The data file path for the company data is hardcoded here. In a real application, you might want to make this configurable.
         const string dataFilePath = @"C:\work\FC.StaffManager.json";
         static Company company = Company.Load(dataFilePath);
 
